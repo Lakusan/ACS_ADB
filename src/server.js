@@ -1,9 +1,13 @@
 //Import Libraries
 const express = require('express');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const cors = require('cors');
 
 const dotenv = require('dotenv');
-const cors = require('cors');
+
+const neo4j = require('neo4j-driver');
+const redis = require('redis');
+const mongoose = require('mongoose');
+
 
 
 //Configuration
@@ -28,30 +32,68 @@ app.use(cors({
 app.use('/api', testRoute);
 
 
-const uri = process.env.MONGODB_CONNECT;
+//Connect to MongoDB
+mongoose.connect(process.env.MONGODB_CONNECT, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+const db = mongoose.connection;
+// Event handlers for connection success and error
+db.on('error', console.error.bind(console, 'Connection error:'));
+db.once('open', () => {
+  console.log('Connected to MongoDB');
+});
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-    serverApi: {
-      version: ServerApiVersion.v1,
-      strict: true,
-      deprecationErrors: true,
-    }
+
+
+//Connect to neo4J
+const neo4jDriver = neo4j.driver(process.env.NEO4J_CONNECT, neo4j.auth.basic(process.env.NEO4J_USER, process.env.NEO4J_PASSWORD));
+const neo4jSession = neo4jDriver.session();
+
+neo4jDriver.verifyConnectivity()
+  .then(() => {
+    console.log('Connected to Neo4j');
+  })
+  .catch((error) => {
+    console.error('Neo4j connection error:', error);
   });
-  async function run() {
-    try {
-      // Connect the client to the server	(optional starting in v4.7)
-      await client.connect();
-      // Send a ping to confirm a successful connection
-      await client.db("admin").command({ ping: 1 });
-      console.log("Successfully connected to MongoDB!");
-    } finally {
-      // Ensures that the client will close when you finish/error
-      await client.close();
-    }
-  }
-  run().catch(console.dir);
 
+
+
+//Connect to Redis
+
+
+const redisClient = redis.createClient({
+    password: process.env.REDIS_PASSWORD,
+    socket: {
+        host: process.env.REDIS_HOST,
+        port: process.env.REDIS_PORT
+    }
+});
+
+const startRedisClient = async () => {
+    await new Promise((resolve, reject) => {
+      redisClient.on('connect', () => {
+        console.log('Connected to Redis');
+        resolve();
+      });
+  
+      redisClient.on('error', (error) => {
+        reject(error);
+      });
+    });
+  
+    try {
+      const result = await pingAsync();
+      console.log('Redis ping result:', result);
+    } catch (error) {
+      console.error('Redis ping error:', error);
+    } finally {
+      await quitAsync();
+      console.log('Redis connection closed');
+    }
+  };
+startRedisClient();
 
 
 
