@@ -1,6 +1,7 @@
 //Import Libraries
 const express = require('express');
-const mongoose = require('mongoose');
+const { MongoClient, ServerApiVersion } = require('mongodb');
+
 const dotenv = require('dotenv');
 const cors = require('cors');
 
@@ -8,7 +9,6 @@ const cors = require('cors');
 //Configuration
 const app = express();
 dotenv.config();
-mongoose.set('strictQuery', true);
 const SERVER_PORT = process.env.SERVER_PORT;
 
 
@@ -28,8 +28,31 @@ app.use(cors({
 app.use('/api', testRoute);
 
 
-//Connect to Database
-mongoose.connect(process.env.DB_CONNECT)
+const uri = process.env.DB_CONNECT;
+
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const client = new MongoClient(uri, {
+    serverApi: {
+      version: ServerApiVersion.v1,
+      strict: true,
+      deprecationErrors: true,
+    }
+  });
+  async function run() {
+    try {
+      // Connect the client to the server	(optional starting in v4.7)
+      await client.connect();
+      // Send a ping to confirm a successful connection
+      await client.db("admin").command({ ping: 1 });
+      console.log("Successfully connected to MongoDB!");
+    } finally {
+      // Ensures that the client will close when you finish/error
+      await client.close();
+    }
+  }
+  run().catch(console.dir);
+
+
 
 
 //Listen Server
