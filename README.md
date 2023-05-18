@@ -3,6 +3,14 @@ M.Sc. ACS - ADB TeamProject
 
 
 
-#### /src/.env
-SERVER_PORT=3000
-MONGODB_CONNECT=mongodb+srv://USERNAME:PASSWORD@cluster0.w8v8ygi.mongodb.net/?retryWrites=true&w=majority
+#### /server/.env
+SERVER_PORT=
+MONGODB_CONNECT=
+NEO4J_CONNECT=
+NEO4J_USER=
+NEO4J_PASSWORD=
+REDIS_HOSTNAME=
+REDIS_PORT=
+REDIS_PASSWORD=
+
+![image](https://github.com/Lakusan/ACS_ADB/assets/118749864/76f95837-bcb0-4b01-94d1-e8e3ce8b4a17)
