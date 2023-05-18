@@ -28,7 +28,7 @@ app.use(cors({
 app.use('/api', testRoute);
 
 
-const uri = process.env.DB_CONNECT;
+const uri = process.env.MONGODB_CONNECT;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
