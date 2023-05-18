@@ -13,6 +13,7 @@ M.Sc. ACS - ADB TeamProject
 
 
 
+## Env Variables
 
 #### /server/.env
 SERVER_PORT=
