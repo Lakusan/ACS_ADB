@@ -13,4 +13,3 @@ REDIS_HOSTNAME=
 REDIS_PORT=
 REDIS_PASSWORD=
 
-![image](https://github.com/Lakusan/ACS_ADB/assets/118749864/76f95837-bcb0-4b01-94d1-e8e3ce8b4a17)
