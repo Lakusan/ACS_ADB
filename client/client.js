@@ -7,7 +7,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 const app = express();
 
-const CLIENT_PORT = process.env.CLIENT_PORT;
+const CLIENT_PORT = process.env.CLIENT_PORT || 80;
 
 // Route Middlewares
 app.use(express.static('public'));
