@@ -1,36 +1,26 @@
 const mongoose = require('mongoose');
 
 const citySchema = new mongoose.Schema({
-  area: {
-    type: String,
-    required: true,
-  },
   coords: {
     lat: {
       type: String,
-      required: true,
+      required: true
     },
     lon: {
       type: String,
-      required: true,
-    },
-  },
-  district: {
-    type: String,
-    required: true,
+      required: true
+    }
   },
   name: {
     type: String,
     required: true,
+    index: true // Create an index on the "name" field
   },
-  population: {
-    type: String,
-    required: true,
-  },
-  state: {
-    type: String,
-    required: true,
-  },
+  country: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Country',
+    required: true
+  }
 });
 
 const City = mongoose.model('City', citySchema);

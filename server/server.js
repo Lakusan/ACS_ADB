@@ -9,15 +9,6 @@ const redis = require('redis');
 const mongoose = require('mongoose');
 
 
-//MongoDB Models
-const Country = require('./schemas/Country');
-
-
-const State = require('./schemas/State');
-const City = require('./schemas/City');
-const Airport = require('./schemas/Airport');
-
-
 
 
 //Configuration
