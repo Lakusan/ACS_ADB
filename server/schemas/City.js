@@ -1,21 +1,36 @@
 const mongoose = require('mongoose');
 
 const citySchema = new mongoose.Schema({
+  area: {
+    type: String,
+    required: true,
+  },
+  coords: {
+    lat: {
+      type: String,
+      required: true,
+    },
+    lon: {
+      type: String,
+      required: true,
+    },
+  },
+  district: {
+    type: String,
+    required: true,
+  },
   name: {
     type: String,
     required: true,
   },
+  population: {
+    type: String,
+    required: true,
+  },
   state: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'State',
+    type: String,
     required: true,
   },
-  country: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Country',
-    required: true,
-  },
-  // Other necessary details specific to your flight tracking application
 });
 
 const City = mongoose.model('City', citySchema);
