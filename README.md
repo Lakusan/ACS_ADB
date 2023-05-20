@@ -1,6 +1,6 @@
-# ACS_ADB
-M.Sc. ACS - ADB TeamProject
-
+# ACS_ADB - drunken Masters
+M.Sc. ACS - ADB Team Project
+Members: Andreas Lakus, Ugurcan Kaya
 
 
 ## Pre-Requirements and Run
