@@ -301,3 +301,10 @@ if (bulkUpdateOps.length > 0) {
 } else {
   print("No airlines to update.");
 }
+
+//2.Fix wrong data records that does not have country correctly.
+db.airlines.updateMany(
+  { country: { $exists: true, $type: "string" } },
+  { $set: { country: null } }
+);
+
