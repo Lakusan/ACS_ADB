@@ -51,6 +51,116 @@ print("Total airports removed: " + count);
 
 
 
+// Map latitude and longitude fields with an external location field
+var bulkUpdates = [];
+
+db.airports.find().forEach(function(doc) {
+  var location = {
+    "latitude": doc.latitude,
+    "longitude": doc.longitude
+  };
+
+  var updateOperation = {
+    "updateOne": {
+      "filter": { "_id": doc._id },
+      "update": { "$set": { "location": location } }
+    }
+  };
+
+  bulkUpdates.push(updateOperation);
+
+  // Perform bulk updates in batches of 1000 documents
+  if (bulkUpdates.length === 1000) {
+    db.airports.bulkWrite(bulkUpdates);
+    bulkUpdates = [];
+  }
+
+  // Log a message for each updated document
+  print("Updated document with _id: " + doc._id);
+});
+
+// Perform the remaining updates
+if (bulkUpdates.length > 0) {
+  db.airports.bulkWrite(bulkUpdates);
+}
+
+
+//Remove the older latitude and longitude fields
+var bulkUpdates = [];
+
+db.airports.find().forEach(function(doc) {
+  var location = {
+    "latitude": doc.latitude,
+    "longitude": doc.longitude
+  };
+
+  var updateOperation = {
+    "updateOne": {
+      "filter": { "_id": doc._id },
+      "update": {
+        "$set": { "location": location },
+        "$unset": { "latitude": "", "longitude": "" }
+      }
+    }
+  };
+
+  bulkUpdates.push(updateOperation);
+
+  // Perform bulk updates in batches of 1000 documents
+  if (bulkUpdates.length === 1000) {
+    db.airports.bulkWrite(bulkUpdates);
+    bulkUpdates = [];
+  }
+
+  // Log a message for each updated document
+  print("Updated document with _id: " + doc._id);
+});
+
+// Perform the remaining updates
+if (bulkUpdates.length > 0) {
+  db.airports.bulkWrite(bulkUpdates);
+}
+
+
+
+
+//convert coordinates as float numbers
+const collection = db.getCollection('airports'); // Replace with your collection name
+
+// Find all documents in the collection
+const documents = collection.find().toArray();
+
+// Update each document
+documents.forEach(doc => {
+  const { _id, location } = doc;
+
+  // Convert latitude and longitude to numbers
+  const latitude = parseFloat(location.latitude);
+  const longitude = parseFloat(location.longitude);
+
+  // Create the GeoJSON object
+  const geoJson = {
+    type: 'Point',
+    coordinates: [longitude, latitude],
+  };
+
+  // Update the document with the new location field
+  collection.updateOne(
+    { _id },
+    { $set: { location: geoJson } }
+  );
+
+  print(`Document ${_id} updated successfully`);
+});
+
+print('All documents updated successfully');
+
+//create index for location field
+db.airports.createIndex({ location: "2dsphere" });
+
+
+
+
 
 /*
 
@@ -307,4 +417,8 @@ db.airlines.updateMany(
   { country: { $exists: true, $type: "string" } },
   { $set: { country: null } }
 );
+
+
+
+
 
