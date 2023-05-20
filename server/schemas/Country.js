@@ -1,14 +1,13 @@
 const mongoose = require('mongoose');
 
-const countrySchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  // Other necessary details specific to your flight tracking application
+// Define the schema
+const countriesSchema = new mongoose.Schema({
+  name: String,
+  iso_code: String,
+  dafif_code: String
 });
 
-const Country = mongoose.model('Country', countrySchema);
+// Create the model
+const Country = mongoose.model('Data', countriesSchema);
 
 module.exports = Country;

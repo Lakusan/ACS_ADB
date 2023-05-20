@@ -1,0 +1,1232 @@
+[
+  {
+    "name": "Aerospatiale (Nord) 262",
+    "iata_code": "ND2",
+    "icao_code": "N262"
+  },
+  {
+    "name": "Aerospatiale (Sud Aviation) Se.210 Caravelle",
+    "iata_code": "CRV",
+    "icao_code": "S210"
+  },
+  {
+    "name": "Aerospatiale SN.601 Corvette",
+    "iata_code": "NDC",
+    "icao_code": "S601"
+  },
+  {
+    "name": "Aerospatiale/Alenia ATR 42-300",
+    "iata_code": "AT4",
+    "icao_code": "AT43"
+  },
+  {
+    "name": "Aerospatiale/Alenia ATR 42-500",
+    "iata_code": "AT5",
+    "icao_code": "AT45"
+  },
+  {
+    "name": "Aerospatiale/Alenia ATR 42-600",
+    "iata_code": "ATR",
+    "icao_code": "AT46"
+  },
+  {
+    "name": "Aerospatiale/Alenia ATR 72",
+    "iata_code": "AT7",
+    "icao_code": "AT72"
+  },
+  {
+    "name": "Airbus A300",
+    "iata_code": "AB3",
+    "icao_code": "A30B"
+  },
+  {
+    "name": "Airbus A300-600",
+    "iata_code": "AB6",
+    "icao_code": "A306"
+  },
+  {
+    "name": "Airbus A300-600ST Super Transporter / Beluga",
+    "iata_code": "ABB",
+    "icao_code": "A3ST"
+  },
+  {
+    "name": "Airbus A310",
+    "iata_code": "310",
+    "icao_code": "A310"
+  },
+  {
+    "name": "Airbus A318",
+    "iata_code": "318",
+    "icao_code": "A318"
+  },
+  {
+    "name": "Airbus A319",
+    "iata_code": "319",
+    "icao_code": "A319"
+  },
+  {
+    "name": "Airbus A319neo",
+    "iata_code": "31N",
+    "icao_code": "A19N"
+  },
+  {
+    "name": "Airbus A320",
+    "iata_code": "320",
+    "icao_code": "A320"
+  },
+  {
+    "name": "Airbus A320neo",
+    "iata_code": "32N",
+    "icao_code": "A20N"
+  },
+  {
+    "name": "Airbus A321",
+    "iata_code": "321",
+    "icao_code": "A321"
+  },
+  {
+    "name": "Airbus A321neo",
+    "iata_code": "32Q",
+    "icao_code": "A21N"
+  },
+  {
+    "name": "Airbus A330",
+    "iata_code": "330",
+    "icao_code": "N"
+  },
+  {
+    "name": "Airbus A330-200",
+    "iata_code": "332",
+    "icao_code": "A332"
+  },
+  {
+    "name": "Airbus A330-300",
+    "iata_code": "333",
+    "icao_code": "A333"
+  },
+  {
+    "name": "Airbus A330-700 Beluga XL",
+    "iata_code": "N",
+    "icao_code": "A337"
+  },
+  {
+    "name": "Airbus A330-800neo",
+    "iata_code": "338",
+    "icao_code": "A338"
+  },
+  {
+    "name": "Airbus A330-900neo",
+    "iata_code": "339",
+    "icao_code": "A339"
+  },
+  {
+    "name": "Airbus A340",
+    "iata_code": "340",
+    "icao_code": "N"
+  },
+  {
+    "name": "Airbus A340-200",
+    "iata_code": "342",
+    "icao_code": "A342"
+  },
+  {
+    "name": "Airbus A340-300",
+    "iata_code": "343",
+    "icao_code": "A343"
+  },
+  {
+    "name": "Airbus A340-500",
+    "iata_code": "345",
+    "icao_code": "A345"
+  },
+  {
+    "name": "Airbus A340-600",
+    "iata_code": "346",
+    "icao_code": "A346"
+  },
+  {
+    "name": "Airbus A350",
+    "iata_code": "350",
+    "icao_code": "N"
+  },
+  {
+    "name": "Airbus A350-1000",
+    "iata_code": "351",
+    "icao_code": "A35K"
+  },
+  {
+    "name": "Airbus A350-900",
+    "iata_code": "359",
+    "icao_code": "A359"
+  },
+  {
+    "name": "Airbus A380",
+    "iata_code": "380",
+    "icao_code": "N"
+  },
+  {
+    "name": "Airbus A380-800",
+    "iata_code": "388",
+    "icao_code": "A388"
+  },
+  {
+    "name": "Antonov AN-12",
+    "iata_code": "ANF",
+    "icao_code": "AN12"
+  },
+  {
+    "name": "Antonov AN-124 Ruslan",
+    "iata_code": "A4F",
+    "icao_code": "A124"
+  },
+  {
+    "name": "Antonov AN-140",
+    "iata_code": "A40",
+    "icao_code": "A140"
+  },
+  {
+    "name": "Antonov An-148",
+    "iata_code": "A81",
+    "icao_code": "A148"
+  },
+  {
+    "name": "Antonov An-158",
+    "iata_code": "A58",
+    "icao_code": "A158"
+  },
+  {
+    "name": "Antonov An-225 Mriya",
+    "iata_code": "A25",
+    "icao_code": "A225"
+  },
+  {
+    "name": "Antonov AN-24",
+    "iata_code": "AN4",
+    "icao_code": "AN24"
+  },
+  {
+    "name": "Antonov AN-26",
+    "iata_code": "A26",
+    "icao_code": "AN26"
+  },
+  {
+    "name": "Antonov AN-28",
+    "iata_code": "A28",
+    "icao_code": "AN28"
+  },
+  {
+    "name": "Antonov AN-30",
+    "iata_code": "A30",
+    "icao_code": "AN30"
+  },
+  {
+    "name": "Antonov AN-32",
+    "iata_code": "A32",
+    "icao_code": "AN32"
+  },
+  {
+    "name": "Antonov AN-72",
+    "iata_code": "AN7",
+    "icao_code": "AN72"
+  },
+  {
+    "name": "Avro RJ100",
+    "iata_code": "AR1",
+    "icao_code": "RJ1H"
+  },
+  {
+    "name": "Avro RJ70",
+    "iata_code": "AR7",
+    "icao_code": "RJ70"
+  },
+  {
+    "name": "Avro RJ85",
+    "iata_code": "AR8",
+    "icao_code": "RJ85"
+  },
+  {
+    "name": "BAe 146",
+    "iata_code": "146",
+    "icao_code": "N"
+  },
+  {
+    "name": "BAe 146-100",
+    "iata_code": "141",
+    "icao_code": "B461"
+  },
+  {
+    "name": "BAe 146-200",
+    "iata_code": "142",
+    "icao_code": "B462"
+  },
+  {
+    "name": "BAe 146-300",
+    "iata_code": "143",
+    "icao_code": "B463"
+  },
+  {
+    "name": "Beechcraft 1900",
+    "iata_code": "BEH",
+    "icao_code": "B190"
+  },
+  {
+    "name": "Beechcraft Baron",
+    "iata_code": "N",
+    "icao_code": "BE58"
+  },
+  {
+    "name": "Beechcraft Baron / 55 Baron",
+    "iata_code": "N",
+    "icao_code": "BE55"
+  },
+  {
+    "name": "Bell 212",
+    "iata_code": "BH2",
+    "icao_code": "B212"
+  },
+  {
+    "name": "Boeing 707",
+    "iata_code": "703",
+    "icao_code": "B703"
+  },
+  {
+    "name": "Boeing 717",
+    "iata_code": "717",
+    "icao_code": "B712"
+  },
+  {
+    "name": "Boeing 720B",
+    "iata_code": "B72",
+    "icao_code": "B720"
+  },
+  {
+    "name": "Boeing 727",
+    "iata_code": "727",
+    "icao_code": "N"
+  },
+  {
+    "name": "Boeing 727-100",
+    "iata_code": "721",
+    "icao_code": "B721"
+  },
+  {
+    "name": "Boeing 727-200",
+    "iata_code": "722",
+    "icao_code": "B722"
+  },
+  {
+    "name": "Boeing 737",
+    "iata_code": "737",
+    "icao_code": "N"
+  },
+  {
+    "name": "Boeing 737 MAX 10",
+    "iata_code": "7MJ",
+    "icao_code": "N"
+  },
+  {
+    "name": "Boeing 737 MAX 7",
+    "iata_code": "7M7",
+    "icao_code": "B37M"
+  },
+  {
+    "name": "Boeing 737 MAX 8",
+    "iata_code": "7M8",
+    "icao_code": "B38M"
+  },
+  {
+    "name": "Boeing 737 MAX 9",
+    "iata_code": "7M9",
+    "icao_code": "B39M"
+  },
+  {
+    "name": "Boeing 737-200",
+    "iata_code": "732",
+    "icao_code": "B732"
+  },
+  {
+    "name": "Boeing 737-300",
+    "iata_code": "733",
+    "icao_code": "B733"
+  },
+  {
+    "name": "Boeing 737-400",
+    "iata_code": "734",
+    "icao_code": "B734"
+  },
+  {
+    "name": "Boeing 737-500",
+    "iata_code": "735",
+    "icao_code": "B735"
+  },
+  {
+    "name": "Boeing 737-600",
+    "iata_code": "736",
+    "icao_code": "B736"
+  },
+  {
+    "name": "Boeing 737-700",
+    "iata_code": "73G",
+    "icao_code": "B737"
+  },
+  {
+    "name": "Boeing 737-800",
+    "iata_code": "738",
+    "icao_code": "B738"
+  },
+  {
+    "name": "Boeing 737-900",
+    "iata_code": "739",
+    "icao_code": "B739"
+  },
+  {
+    "name": "Boeing 747",
+    "iata_code": "747",
+    "icao_code": "N"
+  },
+  {
+    "name": "Boeing 747 LCF Dreamlifter",
+    "iata_code": "74B",
+    "icao_code": "BLCF"
+  },
+  {
+    "name": "Boeing 747-100",
+    "iata_code": "741",
+    "icao_code": "B741"
+  },
+  {
+    "name": "Boeing 747-200",
+    "iata_code": "742",
+    "icao_code": "B742"
+  },
+  {
+    "name": "Boeing 747-300",
+    "iata_code": "743",
+    "icao_code": "B743"
+  },
+  {
+    "name": "Boeing 747-400",
+    "iata_code": "744",
+    "icao_code": "B744"
+  },
+  {
+    "name": "Boeing 747-400D",
+    "iata_code": "74J",
+    "icao_code": "B74D"
+  },
+  {
+    "name": "Boeing 747-8",
+    "iata_code": "748",
+    "icao_code": "B748"
+  },
+  {
+    "name": "Boeing 747SP",
+    "iata_code": "74L",
+    "icao_code": "B74S"
+  },
+  {
+    "name": "Boeing 747SR",
+    "iata_code": "74R",
+    "icao_code": "B74R"
+  },
+  {
+    "name": "Boeing 757",
+    "iata_code": "757",
+    "icao_code": "N"
+  },
+  {
+    "name": "Boeing 757-200",
+    "iata_code": "752",
+    "icao_code": "B752"
+  },
+  {
+    "name": "Boeing 757-300",
+    "iata_code": "753",
+    "icao_code": "B753"
+  },
+  {
+    "name": "Boeing 767",
+    "iata_code": "767",
+    "icao_code": "N"
+  },
+  {
+    "name": "Boeing 767-200",
+    "iata_code": "762",
+    "icao_code": "B762"
+  },
+  {
+    "name": "Boeing 767-300",
+    "iata_code": "763",
+    "icao_code": "B763"
+  },
+  {
+    "name": "Boeing 767-400",
+    "iata_code": "764",
+    "icao_code": "B764"
+  },
+  {
+    "name": "Boeing 777",
+    "iata_code": "777",
+    "icao_code": "N"
+  },
+  {
+    "name": "Boeing 777-200",
+    "iata_code": "772",
+    "icao_code": "B772"
+  },
+  {
+    "name": "Boeing 777-200LR",
+    "iata_code": "77L",
+    "icao_code": "B77L"
+  },
+  {
+    "name": "Boeing 777-300",
+    "iata_code": "773",
+    "icao_code": "B773"
+  },
+  {
+    "name": "Boeing 777-300ER",
+    "iata_code": "77W",
+    "icao_code": "B77W"
+  },
+  {
+    "name": "Boeing 777-8",
+    "iata_code": "778",
+    "icao_code": "B778"
+  },
+  {
+    "name": "Boeing 777-9",
+    "iata_code": "779",
+    "icao_code": "B779"
+  },
+  {
+    "name": "Boeing 787",
+    "iata_code": "787",
+    "icao_code": "N"
+  },
+  {
+    "name": "Boeing 787-10",
+    "iata_code": "78J",
+    "icao_code": "B78X"
+  },
+  {
+    "name": "Boeing 787-8",
+    "iata_code": "788",
+    "icao_code": "B788"
+  },
+  {
+    "name": "Boeing 787-9",
+    "iata_code": "789",
+    "icao_code": "B789"
+  },
+  {
+    "name": "Bombardier 415",
+    "iata_code": "N",
+    "icao_code": "CL2T"
+  },
+  {
+    "name": "Bombardier BD-100 Challenger 300",
+    "iata_code": "N",
+    "icao_code": "CL30"
+  },
+  {
+    "name": "Bombardier CS100",
+    "iata_code": "CS1",
+    "icao_code": "BCS1"
+  },
+  {
+    "name": "Bombardier CS300",
+    "iata_code": "CS3",
+    "icao_code": "BCS3"
+  },
+  {
+    "name": "Bombardier Global Express",
+    "iata_code": "CCX",
+    "icao_code": "GLEX"
+  },
+  {
+    "name": "British Aerospace (BAC) One Eleven",
+    "iata_code": "B11",
+    "icao_code": "BA11"
+  },
+  {
+    "name": "British Aerospace 125 series / Hawker/Raytheon 700/800/800XP/850/900",
+    "iata_code": "H25",
+    "icao_code": "H25B"
+  },
+  {
+    "name": "British Aerospace 125-1000 series / Hawker/Raytheon 1000",
+    "iata_code": "H25",
+    "icao_code": "H25C"
+  },
+  {
+    "name": "British Aerospace ATP",
+    "iata_code": "ATP",
+    "icao_code": "ATP"
+  },
+  {
+    "name": "British Aerospace Jetstream 31",
+    "iata_code": "J31",
+    "icao_code": "JS31"
+  },
+  {
+    "name": "British Aerospace Jetstream 32",
+    "iata_code": "J32",
+    "icao_code": "JS32"
+  },
+  {
+    "name": "British Aerospace Jetstream 41",
+    "iata_code": "J41",
+    "icao_code": "JS41"
+  },
+  {
+    "name": "Canadair Challenger",
+    "iata_code": "CCJ",
+    "icao_code": "CL60"
+  },
+  {
+    "name": "Canadair CL-44",
+    "iata_code": "CL4",
+    "icao_code": "CL44"
+  },
+  {
+    "name": "Canadair Regional Jet 100",
+    "iata_code": "CR1",
+    "icao_code": "CRJ1"
+  },
+  {
+    "name": "Canadair Regional Jet 1000",
+    "iata_code": "CRK",
+    "icao_code": "CRJX"
+  },
+  {
+    "name": "Canadair Regional Jet 200",
+    "iata_code": "CR2",
+    "icao_code": "CRJ2"
+  },
+  {
+    "name": "Canadair Regional Jet 700",
+    "iata_code": "CR7",
+    "icao_code": "CRJ7"
+  },
+  {
+    "name": "Canadair Regional Jet 900",
+    "iata_code": "CR9",
+    "icao_code": "CRJ9"
+  },
+  {
+    "name": "Cessna 152",
+    "iata_code": "N",
+    "icao_code": "C152"
+  },
+  {
+    "name": "Cessna 172",
+    "iata_code": "CN1",
+    "icao_code": "C172"
+  },
+  {
+    "name": "Cessna 182 Skylane",
+    "iata_code": "CN1",
+    "icao_code": "C182"
+  },
+  {
+    "name": "Cessna 208 Caravan",
+    "iata_code": "CN1",
+    "icao_code": "C208"
+  },
+  {
+    "name": "Cessna 210 Centurion",
+    "iata_code": "CN1",
+    "icao_code": "C210"
+  },
+  {
+    "name": "Cessna Citation CJ3",
+    "iata_code": "CNJ",
+    "icao_code": "C25B"
+  },
+  {
+    "name": "Cessna Citation CJ4",
+    "iata_code": "CNJ",
+    "icao_code": "C25C"
+  },
+  {
+    "name": "Cessna Citation Excel",
+    "iata_code": "CNJ",
+    "icao_code": "C56X"
+  },
+  {
+    "name": "Cessna Citation I",
+    "iata_code": "CNJ",
+    "icao_code": "C500"
+  },
+  {
+    "name": "Cessna Citation II",
+    "iata_code": "CNJ",
+    "icao_code": "C550"
+  },
+  {
+    "name": "Cessna Citation Mustang",
+    "iata_code": "CNJ",
+    "icao_code": "C510"
+  },
+  {
+    "name": "Cessna Citation Sovereign",
+    "iata_code": "CNJ",
+    "icao_code": "C680"
+  },
+  {
+    "name": "Cessna Citation X",
+    "iata_code": "CNJ",
+    "icao_code": "C750"
+  },
+  {
+    "name": "COMAC C-919",
+    "iata_code": "N",
+    "icao_code": "C919"
+  },
+  {
+    "name": "Concorde",
+    "iata_code": "SSC",
+    "icao_code": "CONC"
+  },
+  {
+    "name": "Dassault Falcon 2000",
+    "iata_code": "D20",
+    "icao_code": "F2TH"
+  },
+  {
+    "name": "Dassault Falcon 50",
+    "iata_code": "DF3",
+    "icao_code": "FA50"
+  },
+  {
+    "name": "Dassault Falcon 7X",
+    "iata_code": "DF7",
+    "icao_code": "FA7X"
+  },
+  {
+    "name": "Dassault Falcon 900",
+    "iata_code": "DF9",
+    "icao_code": "F900"
+  },
+  {
+    "name": "De Havilland Canada DHC-2 Beaver",
+    "iata_code": "DHP",
+    "icao_code": "DHC2"
+  },
+  {
+    "name": "De Havilland Canada DHC-2 Turbo-Beaver",
+    "iata_code": "DHR",
+    "icao_code": "DH2T"
+  },
+  {
+    "name": "De Havilland Canada DHC-3 Otter",
+    "iata_code": "DHL",
+    "icao_code": "DHC3"
+  },
+  {
+    "name": "De Havilland Canada DHC-4 Caribou",
+    "iata_code": "DHC",
+    "icao_code": "DHC4"
+  },
+  {
+    "name": "De Havilland Canada DHC-6 Twin Otter",
+    "iata_code": "DHT",
+    "icao_code": "DHC6"
+  },
+  {
+    "name": "De Havilland Canada DHC-7 Dash 7",
+    "iata_code": "DH7",
+    "icao_code": "DHC7"
+  },
+  {
+    "name": "De Havilland Canada DHC-8-100 Dash 8 / 8Q",
+    "iata_code": "DH1",
+    "icao_code": "DH8A"
+  },
+  {
+    "name": "De Havilland Canada DHC-8-200 Dash 8 / 8Q",
+    "iata_code": "DH2",
+    "icao_code": "DH8B"
+  },
+  {
+    "name": "De Havilland Canada DHC-8-300 Dash 8",
+    "iata_code": "DH3",
+    "icao_code": "DH8C"
+  },
+  {
+    "name": "De Havilland Canada DHC-8-400 Dash 8Q",
+    "iata_code": "DH4",
+    "icao_code": "DH8D"
+  },
+  {
+    "name": "De Havilland DH.104 Dove",
+    "iata_code": "DHD",
+    "icao_code": "DOVE"
+  },
+  {
+    "name": "De Havilland DH.114 Heron",
+    "iata_code": "DHH",
+    "icao_code": "HERN"
+  },
+  {
+    "name": "Douglas DC-10",
+    "iata_code": "D10",
+    "icao_code": "DC10"
+  },
+  {
+    "name": "Douglas DC-3",
+    "iata_code": "D3F",
+    "icao_code": "DC3"
+  },
+  {
+    "name": "Douglas DC-6",
+    "iata_code": "D6F",
+    "icao_code": "DC6"
+  },
+  {
+    "name": "Douglas DC-8-50",
+    "iata_code": "D8T",
+    "icao_code": "DC85"
+  },
+  {
+    "name": "Douglas DC-8-62",
+    "iata_code": "D8L",
+    "icao_code": "DC86"
+  },
+  {
+    "name": "Douglas DC-8-72",
+    "iata_code": "D8Q",
+    "icao_code": "DC87"
+  },
+  {
+    "name": "Douglas DC-9-10",
+    "iata_code": "D91",
+    "icao_code": "DC91"
+  },
+  {
+    "name": "Douglas DC-9-20",
+    "iata_code": "D92",
+    "icao_code": "DC92"
+  },
+  {
+    "name": "Douglas DC-9-30",
+    "iata_code": "D93",
+    "icao_code": "DC93"
+  },
+  {
+    "name": "Douglas DC-9-40",
+    "iata_code": "D94",
+    "icao_code": "DC94"
+  },
+  {
+    "name": "Douglas DC-9-50",
+    "iata_code": "D95",
+    "icao_code": "DC95"
+  },
+  {
+    "name": "Embraer 170",
+    "iata_code": "E70",
+    "icao_code": "E170"
+  },
+  {
+    "name": "Embraer 175",
+    "iata_code": "E75",
+    "icao_code": "N"
+  },
+  {
+    "name": "Embraer 175 (long wing)",
+    "iata_code": "E7W",
+    "icao_code": "E75L"
+  },
+  {
+    "name": "Embraer 175 (short wing)",
+    "iata_code": "E7W",
+    "icao_code": "E75S"
+  },
+  {
+    "name": "Embraer 190",
+    "iata_code": "E90",
+    "icao_code": "E190"
+  },
+  {
+    "name": "Embraer 195",
+    "iata_code": "E95",
+    "icao_code": "E195"
+  },
+  {
+    "name": "Embraer E190-E2",
+    "iata_code": "290",
+    "icao_code": "E290"
+  },
+  {
+    "name": "Embraer E195-E2",
+    "iata_code": "295",
+    "icao_code": "E295"
+  },
+  {
+    "name": "Embraer EMB 110 Bandeirante",
+    "iata_code": "EMB",
+    "icao_code": "E110"
+  },
+  {
+    "name": "Embraer EMB 120 Brasilia",
+    "iata_code": "EM2",
+    "icao_code": "E120"
+  },
+  {
+    "name": "Embraer Legacy 450",
+    "iata_code": "N",
+    "icao_code": "E545"
+  },
+  {
+    "name": "Embraer Legacy 600",
+    "iata_code": "ER3",
+    "icao_code": "E35L"
+  },
+  {
+    "name": "Embraer Phenom 100",
+    "iata_code": "EP1",
+    "icao_code": "E50P"
+  },
+  {
+    "name": "Embraer Phenom 300",
+    "iata_code": "EP3",
+    "icao_code": "E55P"
+  },
+  {
+    "name": "Embraer RJ135",
+    "iata_code": "ER3",
+    "icao_code": "E135"
+  },
+  {
+    "name": "Embraer RJ140",
+    "iata_code": "ERD",
+    "icao_code": "E135"
+  },
+  {
+    "name": "Embraer RJ145",
+    "iata_code": "ER4",
+    "icao_code": "E145"
+  },
+  {
+    "name": "Fairchild Dornier 328JET",
+    "iata_code": "FRJ",
+    "icao_code": "J328"
+  },
+  {
+    "name": "Fairchild Dornier Do.228",
+    "iata_code": "D28",
+    "icao_code": "D228"
+  },
+  {
+    "name": "Fairchild Dornier Do.328",
+    "iata_code": "D38",
+    "icao_code": "D328"
+  },
+  {
+    "name": "Fokker 100",
+    "iata_code": "100",
+    "icao_code": "F100"
+  },
+  {
+    "name": "Fokker 50",
+    "iata_code": "F50",
+    "icao_code": "F50"
+  },
+  {
+    "name": "Fokker 70",
+    "iata_code": "F70",
+    "icao_code": "F70"
+  },
+  {
+    "name": "Fokker F27 Friendship",
+    "iata_code": "F27",
+    "icao_code": "F27"
+  },
+  {
+    "name": "Fokker F28 Fellowship",
+    "iata_code": "F21",
+    "icao_code": "F28"
+  },
+  {
+    "name": "Gulfstream Aerospace G-159 Gulfstream I",
+    "iata_code": "GRS",
+    "icao_code": "G159"
+  },
+  {
+    "name": "Gulfstream G280",
+    "iata_code": "GR3",
+    "icao_code": "G280"
+  },
+  {
+    "name": "Gulfstream G650",
+    "iata_code": "GJ6",
+    "icao_code": "GLF6"
+  },
+  {
+    "name": "Gulfstream IV",
+    "iata_code": "GJ4",
+    "icao_code": "GLF4"
+  },
+  {
+    "name": "Gulfstream V",
+    "iata_code": "GJ5",
+    "icao_code": "GLF5"
+  },
+  {
+    "name": "Gulfstream/Rockwell (Aero) Commander",
+    "iata_code": "ACP",
+    "icao_code": "AC68"
+  },
+  {
+    "name": "Gulfstream/Rockwell (Aero) Turbo Commander",
+    "iata_code": "ACT",
+    "icao_code": "AC90"
+  },
+  {
+    "name": "Harbin Yunshuji Y12",
+    "iata_code": "YN2",
+    "icao_code": "Y12"
+  },
+  {
+    "name": "Hawker Siddeley HS 748",
+    "iata_code": "HS7",
+    "icao_code": "A748"
+  },
+  {
+    "name": "Ilyushin IL114",
+    "iata_code": "I14",
+    "icao_code": "I114"
+  },
+  {
+    "name": "Ilyushin IL18",
+    "iata_code": "IL8",
+    "icao_code": "IL18"
+  },
+  {
+    "name": "Ilyushin IL62",
+    "iata_code": "IL6",
+    "icao_code": "IL62"
+  },
+  {
+    "name": "Ilyushin IL76",
+    "iata_code": "IL7",
+    "icao_code": "IL76"
+  },
+  {
+    "name": "Ilyushin IL86",
+    "iata_code": "ILW",
+    "icao_code": "IL86"
+  },
+  {
+    "name": "Ilyushin IL96",
+    "iata_code": "I93",
+    "icao_code": "IL96"
+  },
+  {
+    "name": "Learjet 35",
+    "iata_code": "LRJ",
+    "icao_code": "LJ35"
+  },
+  {
+    "name": "Learjet 60",
+    "iata_code": "LRJ",
+    "icao_code": "LJ60"
+  },
+  {
+    "name": "Lockheed L-1011 Tristar",
+    "iata_code": "L10",
+    "icao_code": "L101"
+  },
+  {
+    "name": "Lockheed L-1049 Super Constellation",
+    "iata_code": "L49",
+    "icao_code": "CONI"
+  },
+  {
+    "name": "Lockheed L-182 / 282 / 382 (L-100) Hercules",
+    "iata_code": "LOH",
+    "icao_code": "C130"
+  },
+  {
+    "name": "Lockheed L-188 Electra",
+    "iata_code": "LOE",
+    "icao_code": "L188"
+  },
+  {
+    "name": "McDonnell Douglas MD-11",
+    "iata_code": "M11",
+    "icao_code": "MD11"
+  },
+  {
+    "name": "McDonnell Douglas MD-81",
+    "iata_code": "M81",
+    "icao_code": "MD81"
+  },
+  {
+    "name": "McDonnell Douglas MD-82",
+    "iata_code": "M82",
+    "icao_code": "MD82"
+  },
+  {
+    "name": "McDonnell Douglas MD-83",
+    "iata_code": "M83",
+    "icao_code": "MD83"
+  },
+  {
+    "name": "McDonnell Douglas MD-87",
+    "iata_code": "M87",
+    "icao_code": "MD87"
+  },
+  {
+    "name": "McDonnell Douglas MD-88",
+    "iata_code": "M88",
+    "icao_code": "MD88"
+  },
+  {
+    "name": "McDonnell Douglas MD-90",
+    "iata_code": "M90",
+    "icao_code": "MD90"
+  },
+  {
+    "name": "NAMC YS-11",
+    "iata_code": "YS1",
+    "icao_code": "YS11"
+  },
+  {
+    "name": "Partenavia P.68",
+    "iata_code": "PN6",
+    "icao_code": "P68"
+  },
+  {
+    "name": "Pilatus Britten-Norman BN-2A Mk III Trislander",
+    "iata_code": "BNT",
+    "icao_code": "TRIS"
+  },
+  {
+    "name": "Pilatus Britten-Norman BN-2A/B Islander",
+    "iata_code": "BNI",
+    "icao_code": "BN2P"
+  },
+  {
+    "name": "Pilatus PC-12",
+    "iata_code": "PL2",
+    "icao_code": "PC12"
+  },
+  {
+    "name": "Pilatus PC-6 Turbo Porter",
+    "iata_code": "PL6",
+    "icao_code": "PC6T"
+  },
+  {
+    "name": "Piper PA-28 (above 200 hp)",
+    "iata_code": "N",
+    "icao_code": "P28B"
+  },
+  {
+    "name": "Piper PA-28 (up to 180 hp)",
+    "iata_code": "N",
+    "icao_code": "P28A"
+  },
+  {
+    "name": "Piper PA-31 Navajo",
+    "iata_code": "PA2",
+    "icao_code": "PA31"
+  },
+  {
+    "name": "Piper PA-44 Seminole",
+    "iata_code": "N",
+    "icao_code": "PA44"
+  },
+  {
+    "name": "Piper PA-46",
+    "iata_code": "PAG",
+    "icao_code": "PA46"
+  },
+  {
+    "name": "Saab 2000",
+    "iata_code": "S20",
+    "icao_code": "SB20"
+  },
+  {
+    "name": "Saab SF340A/B",
+    "iata_code": "SF3",
+    "icao_code": "SF34"
+  },
+  {
+    "name": "Shorts SC-5 Belfast",
+    "iata_code": "SHB",
+    "icao_code": "BELF"
+  },
+  {
+    "name": "Shorts SC-7 Skyvan",
+    "iata_code": "SHS",
+    "icao_code": "SC7"
+  },
+  {
+    "name": "Shorts SD.330",
+    "iata_code": "SH3",
+    "icao_code": "SH33"
+  },
+  {
+    "name": "Shorts SD.360",
+    "iata_code": "SH6",
+    "icao_code": "SH36"
+  },
+  {
+    "name": "Sikorsky S-58T",
+    "iata_code": "S58",
+    "icao_code": "S58T"
+  },
+  {
+    "name": "Sikorsky S-61",
+    "iata_code": "S61",
+    "icao_code": "S61"
+  },
+  {
+    "name": "Sikorsky S-76",
+    "iata_code": "S76",
+    "icao_code": "S76"
+  },
+  {
+    "name": "Sikorsky S-92",
+    "iata_code": "S92",
+    "icao_code": "S92"
+  },
+  {
+    "name": "Sukhoi Superjet 100-95",
+    "iata_code": "SU9",
+    "icao_code": "SU95"
+  },
+  {
+    "name": "Tupolev Tu-134",
+    "iata_code": "TU3",
+    "icao_code": "T134"
+  },
+  {
+    "name": "Tupolev Tu-144",
+    "iata_code": "N",
+    "icao_code": "T144"
+  },
+  {
+    "name": "Tupolev Tu-154",
+    "iata_code": "TU5",
+    "icao_code": "T154"
+  },
+  {
+    "name": "Tupolev Tu-204",
+    "iata_code": "T20",
+    "icao_code": "T204"
+  },
+  {
+    "name": "Yakovlev Yak-40",
+    "iata_code": "YK4",
+    "icao_code": "YK40"
+  },
+  {
+    "name": "Yakovlev Yak-42",
+    "iata_code": "YK2",
+    "icao_code": "YK42"
+  }
+]
