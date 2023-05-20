@@ -237,7 +237,7 @@ if (bulkOps.length > 0) {
 
 //7.remove extra field
 
-db.routes.updateMany({}, { $unset: { airline_id: "" } });
+db.routes.updateMany({}, { $unset: { airline: "" } });
 
 //fix errors 
 db.routes.updateMany({}, { $unset: { routes: 1 } });
@@ -271,3 +271,33 @@ if (bulkOps.length > 0) {
 
 // Print the number of documents updated
 print(`Number of documents updated: ${cursor.count()}`);
+
+
+/* Airlines Collection */
+
+//1.Map airlines.country with countries._id
+// Initialize bulk operations
+var bulkUpdateOps = [];
+var count = 0;
+
+db.airlines.find({ country: { $exists: true, $type: "string" } }).forEach(function(airline) {
+  var country = db.countries.findOne({ name: airline.country });
+  if (country) {
+    bulkUpdateOps.push({
+      updateOne: {
+        filter: { _id: airline._id, country: { $exists: true, $type: "string" } },
+        update: { $set: { country: country._id } }
+      }
+    });
+
+    count++;
+  }
+});
+
+if (bulkUpdateOps.length > 0) {
+  var bulkResult = db.airlines.bulkWrite(bulkUpdateOps);
+
+  print(`Total airlines updated: ${bulkResult.modifiedCount}`);
+} else {
+  print("No airlines to update.");
+}
