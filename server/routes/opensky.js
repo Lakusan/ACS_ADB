@@ -11,14 +11,30 @@ router.get('/opensky',  async (req,res) => {
   
     const url = 'https://opensky-network.org/api/states/all';
 
-    // Optional parameters
-    const parameters = {
-        lomin: -24,      // Minimum longitude for Europe
-        lomax: 40,       // Maximum longitude for Europe
-        lamin: 35,       // Minimum latitude for Europe
-        lamax: 71        // Maximum latitude for Europe
+    // Get optional parameters from user
+    const { lomin, lomax, lamin, lamax } = req.query;
+
+    // Default parameters for Europe
+    const defaultParams = {
+    lomin: -24,      // Minimum longitude for Europe
+    lomax: 40,       // Maximum longitude for Europe
+    lamin: 35,       // Minimum latitude for Europe
+    lamax: 71        // Maximum latitude for Europe
     };
-  
+
+    // Validate and use user-provided or default parameters
+    const parameters = {
+    lomin: validateCoordinate(lomin) ? parseFloat(lomin) : defaultParams.lomin,
+    lomax: validateCoordinate(lomax) ? parseFloat(lomax) : defaultParams.lomax,
+    lamin: validateCoordinate(lamin) ? parseFloat(lamin) : defaultParams.lamin,
+    lamax: validateCoordinate(lamax) ? parseFloat(lamax) : defaultParams.lamax
+    };
+
+    // Helper function to validate coordinate value
+    function validateCoordinate(coord) {
+    return coord && !isNaN(parseFloat(coord)) && isFinite(coord);
+    }
+
     axios.get(url, { params: parameters })
       .then(response => {
         const data = response.data;
