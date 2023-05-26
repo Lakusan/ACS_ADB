@@ -1,6 +1,6 @@
 // Example data for flight calculation
-const departureAirport = db.airports.findOne({ "iata": "JFK" });
-const destinationAirport = db.airports.findOne({ "iata": "SAW" });
+const departureAirport = db.airports.findOne({ "iata": "SAW" });
+const destinationAirport = db.airports.findOne({ "iata": "SIN" });
 const aircraftRange = 13430; // Maximum range of an Airbus A340 in kilometers
 const aircraftSpeed = 900; // Average aircraft speed in kilometers per hour
 const aircraftFuelConsumption = 2.5; // Fuel consumption rate of Airbus A340 in liters per kilometer
