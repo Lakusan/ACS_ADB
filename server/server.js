@@ -34,6 +34,9 @@ app.use(cors());
 app.use('/api/flights', FlightsStatus);
 
 
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/public', 'index.html'));
+});
 
 //Connect to MongoDB
 mongoose.connect(process.env.MONGODB_CONNECT, {
