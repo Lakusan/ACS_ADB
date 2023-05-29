@@ -8,6 +8,7 @@ const neo4j = require('neo4j-driver');
 const redis = require('redis');
 const mongoose = require('mongoose');
 const redisClient = require('./redisClient');
+const path = require('path');
 
 
 
@@ -22,17 +23,24 @@ const SERVER_PORT = process.env.SERVER_PORT;
 //Import Routes
 const testRoute = require('./routes/test');
 const opensky = require('./routes/opensky');
+const FlightsStatus = require('./routes/flights');
+
+
 
 //Middleware
 app.use(express.json());
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: 'http://localhost',
     
 }));
 //Route Middlewares
 app.use('/api', testRoute);
 app.use('/api', opensky);
+app.use('/api', FlightsStatus);
 
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/public', 'index.html'));
+});
 
 //Connect to MongoDB
 mongoose.connect(process.env.MONGODB_CONNECT, {
