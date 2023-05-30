@@ -59,17 +59,11 @@ neo4jDriver.verifyConnectivity()
     console.error('Neo4j connection error:', error);
   });
 
-
-
 //Connect to Redis
-
-
+const url = `redis://${process.env.REDIS_HOSTNAME}:${process.env.REDIS_PORT}`;
 const redisClient = redis.createClient({
-    password: process.env.REDIS_PASSWORD,
-    socket: {
-        host: process.env.REDIS_HOST,
-        port: process.env.REDIS_PORT
-    }
+  url,
+  password: `${process.env.REDIS_PASSWORD}`
 });
 
 const startRedisClient = async () => {
@@ -94,9 +88,33 @@ const startRedisClient = async () => {
       console.log('Redis connection closed');
     }
   };
-startRedisClient();
+// startRedisClient();
+redisClient.connect();
+redisClient.on('error', err => console.log('Redis error: ', err.message));
+redisClient.on('connect', () => console.log('Connected to redis server'));
+
+/// WORKS
+const val = 'hello12';
+
+redisClient.set('key', val, function(err) {  
+  if (err) {
+    throw err
+  } else {
+    console.log("REDIS SET OK");
+  }
+})
+.then(console.log("DONE"));
 
 
+// redisClient.get('key', function(err, value) {
+//   if (err) {
+//     throw err
+//   }
+//   // assert.equal(value, val);
+//   console.log('it works!');
+//   redisClient.quit();
+//   console.log("REDIS QUIT")
+// });
 
 //Listen Server
 app.listen(SERVER_PORT, () => console.log(`Server is running on PORT: ${SERVER_PORT}`));
