@@ -16,8 +16,6 @@ const redisClientListen = redis.createClient({
 router.get('/opensky/flights/:icao24', async (req, res) => {
 
 
-
-
   const icao24 = req.params.icao24.toLowerCase();
   const statesUrl = 'https://opensky-network.org/api/states/all';
   const currentTimestamp = Math.floor(Date.now() / 1000); // Current timestamp in seconds
@@ -26,10 +24,6 @@ router.get('/opensky/flights/:icao24', async (req, res) => {
   const flightsUrl = `https://opensky-network.org/api/flights/aircraft?icao24=${icao24}&begin=${twelveHoursAgoTimestamp}&end=${currentTimestamp}`;
 
   try {
-
-
-    
-
     //check if data exists in redis
     redisClientListen.connect();
     redisClientListen.on('error', err => console.log('Redis error: ', err.message));
@@ -37,13 +31,12 @@ router.get('/opensky/flights/:icao24', async (req, res) => {
     const value = await redisClientListen.get(icao24);
     if (value) {
       console.log('data returned from redis');
-      res.status(200).json(JSON.parse(value));
+      const cachedData = JSON.parse(value);
+      res.status(200).json({cachedData , source: 'redis'});
       redisClientListen.quit();
       return;
     }
     redisClientListen.quit();
-
-
 
 
     const statesResponse = await axios.get(statesUrl, {
@@ -106,7 +99,7 @@ router.get('/opensky/flights/:icao24', async (req, res) => {
 
 
 
-    res.json(flightInfo);
+    res.json({flightInfo, source: "api"});
     console.log('data returned from api call');
   } catch (error) {
     console.error('Error retrieving flight data:', error);
