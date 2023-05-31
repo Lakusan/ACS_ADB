@@ -2,36 +2,36 @@ const router = require('express').Router();
 const axios = require('axios');
 const redis = require('redis');
 
-
 require('dotenv').config({ path: '../.env' });
-
-
 
 // Create a Redis client
 const redisClient = redis.createClient({
   password: process.env.REDIS_PASSWORD,
   socket: {
-      host: process.env.REDIS_HOST,
-      port: process.env.REDIS_PORT
+    host: process.env.REDIS_HOST,
+    port: process.env.REDIS_PORT
   }
 });
 
+// Redis Pub/Sub channel name
+const channel = 'flightChannel';
+
+// Subscribe to the Redis Pub/Sub channel
+redisClient.subscribe(channel);
+
+// Handle incoming messages from the subscribed channel
+redisClient.on('message', (channel, message) => {
+  console.log(`Received message from channel '${channel}': ${message}`);
+  // Process the received message if needed
+});
 
 // test
 router.get('/opensky/:flightNumber?', async (req, res) => {
-
   const url = 'https://opensky-network.org/api/states/all';
 
   const flightNumber = req.params.flightNumber || '';
 
   const cacheKey = `${url}_${flightNumber}`;
-
-
-  redisClient.connect();
-  redisClient.on('error', err => console.log('Redis error: ', err.message));
-  redisClient.on('connect', () => console.log('Connected to redis server'));
-
-
 
   // Check if the data is already cached
   redisClient.get(cacheKey, (err, cachedData) => {
@@ -64,6 +64,9 @@ router.get('/opensky/:flightNumber?', async (req, res) => {
 
           // Store the data in Redis cache with a 2-minute expiration
           redisClient.setex(cacheKey, 120, JSON.stringify(flights));
+
+          // Publish the new flight data to the Redis Pub/Sub channel
+          redisClient.publish(channel, JSON.stringify(flights));
 
           res.json(flights);
         })
