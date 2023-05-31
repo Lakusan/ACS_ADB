@@ -7,6 +7,7 @@ const dotenv = require('dotenv');
 const neo4j = require('neo4j-driver');
 const redis = require('redis');
 const mongoose = require('mongoose');
+const redisClient = require('./redisClient');
 
 
 
@@ -64,7 +65,9 @@ neo4jDriver.verifyConnectivity()
 
 
 
+
 //Listen Server
 app.listen(SERVER_PORT, () => console.log(`Server is running on PORT: ${SERVER_PORT}`));
-
+//docker run -d -p 6379:6379 --name myredis --network redisnet redis
 module.exports.app = app;
+
