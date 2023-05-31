@@ -7,47 +7,17 @@ const redisClient = redis.createClient({
   url
 });
 
-const publisher = redis.createClient({
+
+
+const redisClientListen = redis.createClient({
   url
 });
 
-router.get('/opensky/flights/v2/:icao24', async (req, res) => {
-  const icao24 = req.params.icao24.toLowerCase();
-
-  try{
-
-    (async () => {
-
-      const article = {
-        id: '123456',
-        name: 'Using Redis Pub/Sub with Node.js',
-        blog: 'Logrocket Blog',
-      };
-
-      await publisher.connect();
-
-      await publisher.publish('article', JSON.stringify(article));
-    })();
-
-
-   
-  
-  }catch(err){
-    console.log(err);
-    res.status(500).json({ error: 'An error occurred while retrieving flight data' });
-  }
- 
-  
-
-
-  
-
-});
-
-
-
-
 router.get('/opensky/flights/:icao24', async (req, res) => {
+
+
+
+
   const icao24 = req.params.icao24.toLowerCase();
   const statesUrl = 'https://opensky-network.org/api/states/all';
   const currentTimestamp = Math.floor(Date.now() / 1000); // Current timestamp in seconds
@@ -58,10 +28,38 @@ router.get('/opensky/flights/:icao24', async (req, res) => {
   try {
 
 
-    const statesResponse = await axios.get(statesUrl);
+    
+
+    //check if data exists in redis
+    redisClientListen.connect();
+    redisClientListen.on('error', err => console.log('Redis error: ', err.message));
+    redisClientListen.on('connect', () => console.log('Connected to Redis Server'));
+    const value = await redisClientListen.get(icao24);
+    if (value) {
+      console.log('data returned from redis');
+      res.status(200).json(JSON.parse(value));
+      redisClientListen.quit();
+      return;
+    }
+    redisClientListen.quit();
+
+
+
+
+    const statesResponse = await axios.get(statesUrl, {
+      auth: {
+        username: process.env.API_USERNAME,
+        password: process.env.API_PASSWORD
+      }
+    });
     const statesData = statesResponse.data;
 
-    const flightsResponse = await axios.get(flightsUrl);
+    const flightsResponse = await axios.get(flightsUrl, {
+      auth: {
+        username: process.env.API_USERNAME,
+        password: process.env.API_PASSWORD
+      }
+    });
     const flightsData = flightsResponse.data;
 
     // Find the flight with the provided ICAO24 code
@@ -101,9 +99,15 @@ router.get('/opensky/flights/:icao24', async (req, res) => {
       estArrivalTime: flightDetails.lastSeen
       // Add more details as needed
     };
-    
+    redisClient.connect();
+    redisClient.setEx(icao24, 60, JSON.stringify(flightInfo)); // Cache for 1 hour
+    redisClient.quit();
+
+
+
 
     res.json(flightInfo);
+    console.log('data returned from api call');
   } catch (error) {
     console.error('Error retrieving flight data:', error);
     res.status(500).json({ error: 'An error occurred while retrieving flight data' });
