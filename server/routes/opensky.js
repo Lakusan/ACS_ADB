@@ -7,27 +7,25 @@ const redisClient = redis.createClient({
   url
 });
 
-
-
 const redisClientListen = redis.createClient({
   url
 });
 
-router.get('/opensky/flights/:icao24', async (req, res) => {
+const currentTimestamp = Math.floor(Date.now() / 1000); // Current timestamp in seconds
+const twelveHoursAgo = new Date(Date.now() - 12 * 60 * 60 * 1000); // 12 hours ago
+const twelveHoursAgoTimestamp = Math.floor(twelveHoursAgo.getTime() / 1000); // 12 hours ago timestamp in seconds
 
+router.get('/opensky/flights/:icao24', async (req, res) => {
 
   const icao24 = req.params.icao24.toLowerCase();
   const statesUrl = 'https://opensky-network.org/api/states/all';
-  const currentTimestamp = Math.floor(Date.now() / 1000); // Current timestamp in seconds
-  const twelveHoursAgo = new Date(Date.now() - 12 * 60 * 60 * 1000); // 12 hours ago
-  const twelveHoursAgoTimestamp = Math.floor(twelveHoursAgo.getTime() / 1000); // 12 hours ago timestamp in seconds
+  
   const flightsUrl = `https://opensky-network.org/api/flights/aircraft?icao24=${icao24}&begin=${twelveHoursAgoTimestamp}&end=${currentTimestamp}`;
 
   try {
     //check if data exists in redis
     redisClientListen.connect();
     redisClientListen.on('error', err => console.log('Redis error: ', err.message));
-    redisClientListen.on('connect', () => console.log('Connected to Redis Server'));
     const value = await redisClientListen.get(icao24);
     if (value) {
       const cachedData = JSON.parse(value);
@@ -96,13 +94,68 @@ router.get('/opensky/flights/:icao24', async (req, res) => {
     redisClient.quit();
 
 
-
-
     res.json({flightInfo, source: "api"});
   } catch (error) {
     console.error('Error retrieving flight data:', error);
     res.status(500).json({ error: 'An error occurred while retrieving flight data' });
   }
 });
+
+
+// Define a route to retrieve departure flights by departure airport
+router.get('/opensky/flights/departure/:airport', async (req, res) => {
+  const departureAirport = req.params.airport.toLowerCase();
+
+  try {
+    // Make a request to the OpenSky Network API
+    const url = `https://opensky-network.org/api/flights/departure?airport=${departureAirport}&begin=${twelveHoursAgoTimestamp}&end=${currentTimestamp}`;
+    const flightsResponse = await axios.get(url, {
+      auth: {
+        username: process.env.API_USERNAME,
+        password: process.env.API_PASSWORD
+      }
+    });
+  
+
+    // Extract the departure flights data from the response
+    const flights = flightsResponse.data;
+
+    // Return the departure flights as a JSON response
+    res.json(flights);
+  } catch (error) {
+    console.error('Error fetching departure flights:', error);
+    res.status(500).json({ error: 'Error fetching departure flights' });
+  }
+});
+
+
+
+// Define a route to retrieve departure flights by departure airport
+router.get('/opensky/flights/arrival/:airport', async (req, res) => {
+  const departureAirport = req.params.airport.toLowerCase();
+
+  try {
+    // Make a request to the OpenSky Network API
+    const url = `https://opensky-network.org/api/flights/arrival?airport=${departureAirport}&begin=${twelveHoursAgoTimestamp}&end=${currentTimestamp}`;
+    const flightsResponse = await axios.get(url, {
+      auth: {
+        username: process.env.API_USERNAME,
+        password: process.env.API_PASSWORD
+      }
+    });
+  
+
+    // Extract the departure flights data from the response
+    const flights = flightsResponse.data;
+
+    // Return the departure flights as a JSON response
+    res.json(flights);
+  } catch (error) {
+    console.error('Error fetching departure flights:', error);
+    res.status(500).json({ error: 'Error fetching departure flights' });
+  }
+});
+
+
 
 module.exports = router;
