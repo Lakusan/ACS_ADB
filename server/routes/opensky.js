@@ -30,7 +30,6 @@ router.get('/opensky/flights/:icao24', async (req, res) => {
     redisClientListen.on('connect', () => console.log('Connected to Redis Server'));
     const value = await redisClientListen.get(icao24);
     if (value) {
-      console.log('data returned from redis');
       const cachedData = JSON.parse(value);
       res.status(200).json({cachedData , source: 'redis'});
       redisClientListen.quit();
@@ -93,14 +92,13 @@ router.get('/opensky/flights/:icao24', async (req, res) => {
       // Add more details as needed
     };
     redisClient.connect();
-    redisClient.setEx(icao24, 60, JSON.stringify(flightInfo)); // Cache for 1 hour
+    redisClient.setEx(icao24, 60, JSON.stringify(flightInfo)); // Cache for 1 min
     redisClient.quit();
 
 
 
 
     res.json({flightInfo, source: "api"});
-    console.log('data returned from api call');
   } catch (error) {
     console.error('Error retrieving flight data:', error);
     res.status(500).json({ error: 'An error occurred while retrieving flight data' });
