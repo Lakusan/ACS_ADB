@@ -1,80 +1,68 @@
 const router = require('express').Router();
 const axios = require('axios');
-const redis = require('redis');
 
-require('dotenv').config({ path: '../.env' });
 
-// Create a Redis client
-const redisClient = redis.createClient({
-  password: process.env.REDIS_PASSWORD,
-  socket: {
-    host: process.env.REDIS_HOST,
-    port: process.env.REDIS_PORT
+router.get('/opensky/flights/:icao24', async (req, res) => {
+  const icao24 = req.params.icao24.toLowerCase();
+
+  const statesUrl = 'https://opensky-network.org/api/states/all';
+
+  const currentTimestamp = Math.floor(Date.now() / 1000); // Current timestamp in seconds
+  const twelveHoursAgo = new Date(Date.now() - 12 * 60 * 60 * 1000); // 12 hours ago
+const twelveHoursAgoTimestamp = Math.floor(twelveHoursAgo.getTime() / 1000); // 12 hours ago timestamp in seconds
+
+  const flightsUrl = `https://opensky-network.org/api/flights/aircraft?icao24=${icao24}&begin=${twelveHoursAgoTimestamp}&end=${currentTimestamp}`;
+
+  try {
+    const statesResponse = await axios.get(statesUrl);
+    const statesData = statesResponse.data;
+
+    const flightsResponse = await axios.get(flightsUrl);
+    const flightsData = flightsResponse.data;
+
+    // Find the flight with the provided ICAO24 code
+    const flight = statesData.states
+      .map(state => ({
+        icao24: state[0],
+        callsign: state[1].replace(/\s/g, ''), // Remove spaces from the flight callsign
+        originCountry: state[2],
+        longitude: state[5],
+        latitude: state[6],
+        altitude: state[7]
+      }))
+      .find(state => state.icao24 === icao24);
+
+    if (!flight) {
+      res.status(404).json({ error: 'Flight not found' });
+      return;
+    }
+
+    const flightDetails = flightsData[0];
+
+    if (!flightDetails) {
+      res.status(404).json({ error: 'Flight details not found' });
+      return;
+    }
+
+    const flightInfo = {
+      icao24: flight.icao24,
+      callsign: flight.callsign,
+      originCountry: flight.originCountry,
+      longitude: flight.longitude,
+      latitude: flight.latitude,
+      altitude: flight.altitude,
+      estDepartureAirport: flightDetails.estDepartureAirport,
+      estArrivalAirport: flightDetails.estArrivalAirport,
+      estDepartureTime: flightDetails.firstSeen,
+      estArrivalTime: flightDetails.lastSeen
+      // Add more details as needed
+    };
+
+    res.json(flightInfo);
+  } catch (error) {
+    console.error('Error retrieving flight data:', error);
+    res.status(500).json({ error: 'An error occurred while retrieving flight data' });
   }
-});
-
-// Redis Pub/Sub channel name
-const channel = 'flightChannel';
-
-// Subscribe to the Redis Pub/Sub channel
-redisClient.subscribe(channel);
-
-// Handle incoming messages from the subscribed channel
-redisClient.on('message', (channel, message) => {
-  console.log(`Received message from channel '${channel}': ${message}`);
-  // Process the received message if needed
-});
-
-// test
-router.get('/opensky/:flightNumber?', async (req, res) => {
-  const url = 'https://opensky-network.org/api/states/all';
-
-  const flightNumber = req.params.flightNumber || '';
-
-  const cacheKey = `${url}_${flightNumber}`;
-
-  // Check if the data is already cached
-  redisClient.get(cacheKey, (err, cachedData) => {
-    if (err) {
-      console.error('Error retrieving cached data from Redis:', err);
-    }
-
-    if (cachedData) {
-      // Data is found in cache, return the cached data
-      const flights = JSON.parse(cachedData);
-      res.json(flights);
-    } else {
-      // Data is not cached, make the API request
-      axios
-        .get(url)
-        .then(response => {
-          const data = response.data;
-
-          // Extract flight information and filter by flight number if provided
-          const flights = data.states
-            .map(flight => ({
-              icao24: flight[0],
-              callsign: flight[1].replace(/\s/g, ''), // Remove spaces from the flight call number
-              originCountry: flight[2],
-              longitude: flight[5],
-              latitude: flight[6],
-              altitude: flight[7]
-            }))
-            .filter(flight => flightNumber === '' || flight.callsign === flightNumber);
-
-          // Store the data in Redis cache with a 2-minute expiration
-          redisClient.setex(cacheKey, 120, JSON.stringify(flights));
-
-          // Publish the new flight data to the Redis Pub/Sub channel
-          redisClient.publish(channel, JSON.stringify(flights));
-
-          res.json(flights);
-        })
-        .catch(error => {
-          res.status(500).json({ error: 'An error occurred while retrieving flight data' });
-        });
-    }
-  });
 });
 
 module.exports = router;

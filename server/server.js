@@ -61,44 +61,10 @@ neo4jDriver.verifyConnectivity()
 
 
 
-//Connect to Redis
-
-
-const redisClient = redis.createClient({
-    password: process.env.REDIS_PASSWORD,
-    socket: {
-        host: process.env.REDIS_HOST,
-        port: process.env.REDIS_PORT
-    }
-});
-
-const startRedisClient = async () => {
-    await new Promise((resolve, reject) => {
-      redisClient.on('connect', () => {
-        console.log('Connected to Redis');
-        resolve();
-      });
-  
-      redisClient.on('error', (error) => {
-        reject(error);
-      });
-    });
-  
-    try {
-      const result = await pingAsync();
-      console.log('Redis ping result:', result);
-    } catch (error) {
-      console.error('Redis ping error:', error);
-    } finally {
-      await quitAsync();
-      console.log('Redis connection closed');
-    }
-  };
-startRedisClient();
 
 
 
 //Listen Server
 app.listen(SERVER_PORT, () => console.log(`Server is running on PORT: ${SERVER_PORT}`));
 
-module.exports = app;
+module.exports.app = app;
