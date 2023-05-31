@@ -17,16 +17,6 @@ const redisClient = redis.createClient({
 });
 
 
-redisClient.on('connect', () => {
-  console.log('Redis client connected');
-});
-
-redisClient.on('error', (error) => {
-  console.error('Redis error:', error);
-});
-
-
-
 // test
 router.get('/opensky/:flightNumber?', async (req, res) => {
 
@@ -35,6 +25,13 @@ router.get('/opensky/:flightNumber?', async (req, res) => {
   const flightNumber = req.params.flightNumber || '';
 
   const cacheKey = `${url}_${flightNumber}`;
+
+
+  redisClient.connect();
+  redisClient.on('error', err => console.log('Redis error: ', err.message));
+  redisClient.on('connect', () => console.log('Connected to redis server'));
+
+
 
   // Check if the data is already cached
   redisClient.get(cacheKey, (err, cachedData) => {
