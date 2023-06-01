@@ -11,12 +11,6 @@ const client = new MongoClient(uri);
 
 
 const maxDistance = 300;
-
-
-
-
-
-
   async function findNearestAirports(longitude, latitude) {
     try {
       await client.connect();
