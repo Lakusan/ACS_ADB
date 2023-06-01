@@ -22,6 +22,8 @@ const SERVER_PORT = process.env.SERVER_PORT;
 //Import Routes
 const testRoute = require('./routes/test');
 const opensky = require('./routes/opensky');
+const airports = require('./routes/airports');
+
 
 //Middleware
 app.use(express.json());
@@ -32,7 +34,7 @@ app.use(cors({
 //Route Middlewares
 app.use('/api', testRoute);
 app.use('/api', opensky);
-
+app.use('/api/', airports);
 
 //Connect to MongoDB
 mongoose.connect(process.env.MONGODB_CONNECT, {
