@@ -12,7 +12,7 @@ const redisClientListen = redis.createClient({
 });
 
 const currentTimestamp = Math.floor(Date.now() / 1000); // Current timestamp in seconds
-const twelveHoursAgo = new Date(Date.now() - 12 * 60 * 60 * 1000); // 12 hours ago
+const twelveHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000); // 12 hours ago
 const twelveHoursAgoTimestamp = Math.floor(twelveHoursAgo.getTime() / 1000); // 12 hours ago timestamp in seconds
 
 router.get('/opensky/flights/:icao24', async (req, res) => {
@@ -20,7 +20,7 @@ router.get('/opensky/flights/:icao24', async (req, res) => {
   const icao24 = req.params.icao24.toLowerCase();
   const statesUrl = 'https://opensky-network.org/api/states/all';
   
-  const flightsUrl = `https://opensky-network.org/api/flights/aircraft?icao24=${icao24}&begin=${twelveHoursAgoTimestamp}&end=${currentTimestamp}`;
+  const flightsUrl = `https://opensky-network.org/api/flights/aircraft?icao24=${icao24}&begin=${currentTimestamp-604800}&end=${currentTimestamp}`;
 
   try {
     //check if data exists in redis
