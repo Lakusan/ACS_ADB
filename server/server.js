@@ -7,6 +7,7 @@ const dotenv = require('dotenv');
 const neo4j = require('neo4j-driver');
 const redis = require('redis');
 const mongoose = require('mongoose');
+const redisClient = require('./redisClient');
 
 
 
@@ -20,8 +21,7 @@ const SERVER_PORT = process.env.SERVER_PORT;
 
 //Import Routes
 const testRoute = require('./routes/test');
-
-
+const opensky = require('./routes/opensky');
 
 //Middleware
 app.use(express.json());
@@ -31,6 +31,7 @@ app.use(cors({
 }));
 //Route Middlewares
 app.use('/api', testRoute);
+app.use('/api', opensky);
 
 
 //Connect to MongoDB
@@ -61,44 +62,12 @@ neo4jDriver.verifyConnectivity()
 
 
 
-//Connect to Redis
 
-
-const redisClient = redis.createClient({
-    password: process.env.REDIS_PASSWORD,
-    socket: {
-        host: process.env.REDIS_HOST,
-        port: process.env.REDIS_PORT
-    }
-});
-
-const startRedisClient = async () => {
-    await new Promise((resolve, reject) => {
-      redisClient.on('connect', () => {
-        console.log('Connected to Redis');
-        resolve();
-      });
-  
-      redisClient.on('error', (error) => {
-        reject(error);
-      });
-    });
-  
-    try {
-      const result = await pingAsync();
-      console.log('Redis ping result:', result);
-    } catch (error) {
-      console.error('Redis ping error:', error);
-    } finally {
-      await quitAsync();
-      console.log('Redis connection closed');
-    }
-  };
-startRedisClient();
 
 
 
 //Listen Server
 app.listen(SERVER_PORT, () => console.log(`Server is running on PORT: ${SERVER_PORT}`));
+//docker run -d -p 6379:6379 --name myredis --network redisnet redis
+module.exports.app = app;
 
-module.exports = app;
