@@ -7,7 +7,6 @@ const dotenv = require('dotenv');
 const neo4j = require('neo4j-driver');
 const redis = require('redis');
 const mongoose = require('mongoose');
-const redisClient = require('./redisClient');
 const path = require('path');
 
 
