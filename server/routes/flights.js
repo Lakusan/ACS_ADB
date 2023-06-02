@@ -3,11 +3,7 @@ const router = require('express').Router();
 const FlightStatusReq = require('../models/FlightStatusReq');
 
 // GET route for fetching all flight details
-<<<<<<< HEAD
-router.get('/', async (req, res) => {
-=======
 router.get('/api/flights', async (req, res) => {
->>>>>>> 18f0f92 (initial changes)
   try {
     const flights = await FlightStatusReq.find();
     res.json(flights);
@@ -18,11 +14,7 @@ router.get('/api/flights', async (req, res) => {
 });
 
 // POST route for fetching flight details based on search criteria
-<<<<<<< HEAD
-router.post('/', async (req, res) => {
-=======
 router.post('/api/flights/search', async (req, res) => {
->>>>>>> 18f0f92 (initial changes)
   const { date, departureAirport, arrivalAirport } = req.body;
 
   try {

@@ -26,10 +26,14 @@
   <script>
     function fetchFlightDetails(date, departureAirport, arrivalAirport) {
 <<<<<<< HEAD
+<<<<<<< HEAD
       fetch('http://localhost:3000/api/flights', {
 =======
       fetch('/api/flights/search', {
 >>>>>>> 18f0f92 (initial changes)
+=======
+      fetch('http://localhost:3000/api/flights', {
+>>>>>>> eff6cdd (api url chnages to connect frontend and backend)
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -58,10 +62,14 @@
 
     function fetchAllFlightDetails() {
 <<<<<<< HEAD
+<<<<<<< HEAD
       fetch('http://localhost:3000/api/flights')
 =======
       fetch('/api/flights')
 >>>>>>> 18f0f92 (initial changes)
+=======
+      fetch('http://localhost:3000/api/flights')
+>>>>>>> eff6cdd (api url chnages to connect frontend and backend)
         .then(response => response.json())
         .then(data => {
           // Display flight details in the 'flightDetails' div
