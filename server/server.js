@@ -22,6 +22,7 @@ const SERVER_PORT = process.env.SERVER_PORT;
 //Import Routes
 const testRoute = require('./routes/test');
 const opensky = require('./routes/opensky');
+const flightStatus = require('./routes/flights');
 
 //Middleware
 app.use(express.json());
@@ -32,6 +33,7 @@ app.use(cors({
 //Route Middlewares
 app.use('/api', testRoute);
 app.use('/api', opensky);
+app.use('/api', flightStatus);
 
 
 //Connect to MongoDB
@@ -47,7 +49,6 @@ db.once('open', () => {
 });
 
 
-
 //Connect to neo4J
 const neo4jDriver = neo4j.driver(process.env.NEO4J_CONNECT, neo4j.auth.basic(process.env.NEO4J_USER, process.env.NEO4J_PASSWORD));
 const neo4jSession = neo4jDriver.session();
@@ -59,11 +60,6 @@ neo4jDriver.verifyConnectivity()
   .catch((error) => {
     console.error('Neo4j connection error:', error);
   });
-
-
-
-
-
 
 
 //Listen Server
