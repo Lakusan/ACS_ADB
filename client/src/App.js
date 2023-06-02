@@ -1,24 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes , Link } from 'react-router-dom';
+import { Home } from './pages/Home';
+import { FlightRadar } from './pages/FlightRadar';
+import { AirportFinder } from './pages/AirportFinder';
+import { FlightFinder } from './pages/FlightFinder';
+import { FlightTracker } from './pages/FlightTracker';
+import { AirportInformation } from './pages/AirportInformation';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <nav>
+      <ul>
+        <li>
+          <Link to="/"> Home </Link>
+        </li>
+        <li>
+          <Link to="/radar"> Flight Radar Andreas</Link>
+        </li>
+        <li>
+          <Link to="/airport/finder"> Aiport Finder Harshitha </Link>
+        </li>
+        <li>
+          <Link to="/flight"> Flight Finder Satish </Link>
+        </li>
+        <li>
+          <Link to="/tracker"> Flight Tracker Ugurcan </Link>
+        </li>
+        <li>
+          <Link to="/airport/info"> Airport information Monisha </Link>
+        </li>
+      </ul>
+    </nav>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/radar" element={<FlightRadar />} />
+      <Route path="/airport/finder" element={<AirportFinder />} />
+      <Route path="/flight" element={<FlightFinder />} />
+      <Route path="/tracker" element={<FlightTracker />} />
+      <Route path="/airport/info" element={<AirportInformation />} />
+    </Routes>
+    </>
   );
 }
 
