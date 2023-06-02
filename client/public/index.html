@@ -25,7 +25,7 @@
   
   <script>
     function fetchFlightDetails(date, departureAirport, arrivalAirport) {
-      fetch('/api/flights/search', {
+      fetch('http://localhost:3000/api/flights', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -53,7 +53,7 @@
     }
 
     function fetchAllFlightDetails() {
-      fetch('/api/flights')
+      fetch('http://localhost:3000/api/flights')
         .then(response => response.json())
         .then(data => {
           // Display flight details in the 'flightDetails' div
