@@ -20,24 +20,19 @@ const SERVER_PORT = process.env.SERVER_PORT;
 
 
 //Import Routes
-const testRoute = require('./routes/test');
+//const testRoute = require('./routes/test');
 const FlightsStatus = require('./routes/flights');
 
 
 
 //Middleware
 app.use(express.json());
-app.use(cors({
-    origin: 'http://localhost',
-    
-}));
+app.use(cors());
 //Route Middlewares
-app.use('/api', testRoute);
-app.use('/api', FlightsStatus);
+//app.use('/api', testRoute);
+app.use('/api/flights', FlightsStatus);
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/public', 'index.html'));
-});
+
 
 //Connect to MongoDB
 mongoose.connect(process.env.MONGODB_CONNECT, {
