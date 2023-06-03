@@ -15,16 +15,12 @@ router.get('/flights', async (req, res) => {
 
 // POST route for fetching flight details based on search criteria
 router.post('/flights/search', async (req, res) => {
-  const { date, departureAirport, arrivalAirport } = req.body;
+  const { departureAirport, arrivalAirport } = req.body;
 
   try {
     const flights = await FlightStatusReq.find({
       departureCity: departureAirport,
-      arrivalCity: arrivalAirport,
-      departureTime: {
-        $gte: new Date(date + 'T00:00:00'),
-        $lt: new Date(date + 'T23:59:59')
-      }
+      arrivalCity: arrivalAirport
     });
 
     res.json(flights);
