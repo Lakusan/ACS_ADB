@@ -15,13 +15,28 @@ class FlightDataRTPubService {
         // json parse
         // callsign: { origin: "country" }
 
+        // recursive call if data collection is done to restart the process
+
+
     }
 
-    destructor() {
-        console.log(`${this.name} is destroyed`);
+    sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async collectRTDataFromAPI() {
+        console.log("Start Data Collection")
+        await this.parseAPIData('states/all');
+        await this.sleep(process.env.API_REFRESH_RATE);
+        await this.collectRTDataFromAPI();
+    }
+
+    stopDataCollection() {
+
     }
 
     async getDataFromAPI(endpoint) {
+        console.log("getDataFromAPI");
         const apiURL = process.env.API_BASE_URL + endpoint;
 
         try {
@@ -39,7 +54,8 @@ class FlightDataRTPubService {
     }
 
     parseAPIData(endpoint) {
-        const rawJSONData = this.getDataFromAPI(endpoint)
+        console.log("parseAPIData");
+        this.getDataFromAPI(endpoint)
             .then((data) => {
                 const parsedData = data.states.map(state => ({
                     icao24: state[0],
@@ -71,6 +87,7 @@ class FlightDataRTPubService {
     }
 
     publishDataOnRedisChannel(data) {
+        console.log("publishDataOnRedisChannel");
         const channel = process.env.REDIS_PUB_FLIGHT_RADAR;
         const redisClient = redisServices.redisConnector();
         // publish stringified Data with ttl of 1 sec
