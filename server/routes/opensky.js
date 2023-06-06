@@ -35,7 +35,7 @@ router.get('/opensky/flights/:icao24', async (req, res) => {
   const icao24 = req.params.icao24.toLowerCase();
   const statesUrl = 'https://opensky-network.org/api/states/all';
   
-  const flightsUrl = `https://opensky-network.org/api/flights/aircraft?icao24=${icao24}&begin=${currentTimestamp-604800}&end=${currentTimestamp}`;
+  const flightsUrl = `https://opensky-network.org/api/flights/aircraft?icao24=${icao24}&begin=${currentTimestamp-504800}&end=${currentTimestamp}`;
 
   try {
     //check if data exists in redis
@@ -44,7 +44,7 @@ router.get('/opensky/flights/:icao24', async (req, res) => {
     const value = await redisClientListen.get(icao24);
     if (value) {
       const cachedData = JSON.parse(value);
-      res.status(200).json({cachedData , source: 'redis'});
+      res.status(200).json({data: cachedData , source: 'redis'});
       redisClientListen.quit();
       return;
     }
@@ -108,7 +108,7 @@ router.get('/opensky/flights/:icao24', async (req, res) => {
     redisClient.quit();
 
 
-    res.json({flightInfo, source: "api"});
+    res.json({data: flightInfo, source: "api"});
   } catch (error) {
     console.error('Error retrieving flight data:', error);
     res.status(500).json({ error: 'An error occurred while retrieving flight data' });
