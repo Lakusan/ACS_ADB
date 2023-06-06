@@ -1,18 +1,30 @@
 //Import Libraries
 const express = require('express');
 const cors = require('cors');
-
 const dotenv = require('dotenv');
+const http = require('http');
+const {Server} = require('socket.io');
 
+// DB imports
 const neo4j = require('neo4j-driver');
 const redis = require('redis');
 const mongoose = require('mongoose');
 
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: '*',
+    methods: ["GET", "POST"]
+  }
+});
+
 // Services 
 const FlightDataRTPubService = require('./services/FlightDataRTPubService');
+const flightDataRTSubService = require('./services/FlightDataRTSubService');
+const redisServices = require('./services/redisServices');
 
 //Configuration
-const app = express();
 dotenv.config();
 const SERVER_PORT = process.env.SERVER_PORT;
 
@@ -35,6 +47,7 @@ app.use('/api', flightRadar);
 //Connect to MongoDB
 mongoose.connect(process.env.MONGODB_CONNECT, {
   useNewUrlParser: true,
+
   useUnifiedTopology: true,
 });
 const db = mongoose.connection;
@@ -57,11 +70,25 @@ neo4jDriver.verifyConnectivity()
   });
 
 //Listen Server
-app.listen(SERVER_PORT, () => console.log(`Server is running on PORT: ${SERVER_PORT}`));
+server.listen(SERVER_PORT, () => console.log(`Server is running on PORT: ${SERVER_PORT}`));
 //docker run -d -p 6379:6379 --name myredis --network redisnet redis
 
-// Start Service for Flight Radar
+// Start Services for Flight Radar
 const flightDataRTPubService = new FlightDataRTPubService("flight radar");
-// const dataJson = flightDataRTPubService.parseAPIData('states/all');
 flightDataRTPubService.collectRTDataFromAPI();
+//Socket IO
+// WORKS
+io.on("connection", (socket) => {
+  console.log(`User Connected: ${socket.id}`);
+  socket.on("send_message", (data) => {
+  console.log(data);
+  });
+});
+//  app.io = io;
+// app.use( function ( req, res, next){
+//   req.io = io;
+//   next();
+// })
+app.set('socketio', io);
+
 module.exports.app = app;
