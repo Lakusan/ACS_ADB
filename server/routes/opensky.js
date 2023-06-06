@@ -40,7 +40,7 @@ router.get('/opensky/flights/:icao24', async (req, res) => {
   try {
     //check if data exists in redis
     redisClientListen.connect();
-    redisClientListen.on('error', err => console.log('Redis error: ', err.message));
+    redisClientListen.on('error', err => con1le.log('Redis error: ', err.message));
     const value = await redisClientListen.get(icao24);
     if (value) {
       const cachedData = JSON.parse(value);
