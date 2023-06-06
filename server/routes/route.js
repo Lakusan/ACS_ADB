@@ -27,8 +27,9 @@ async function calculateDistance(icao1, icao2) {
       // Process the result
       const record = result.records[0];
       const kmDistance = record.get('kmDistance');
-        const airport1 = record.get('a1');
-        const airport2 = record.get('a2');
+      const airport1 = record.get('a1');
+      const airport2 = record.get('a2');
+
 
       return {airport1, airport2, kmDistance};
     } catch (error) {
