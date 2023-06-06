@@ -1,56 +1,18 @@
-// import React from 'react';
-
-// export function AirportFinder() {
-//   return (
-//     <>
-//     <h1> Airport Finder </h1>
-//     </>
-//   );
-// }
-
-
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Input, Button, List } from 'semantic-ui-react';
+import { Input, Button, List, Dropdown } from 'semantic-ui-react';
 import axios from 'axios';
 
-const parseAirportData = (data) => {
-  
-  const lines = data.split('\n');
-
-  const airports = lines.map((line) => {
-    const fields = line.split(',');
-
-    if (fields.length === 13) {
-      const airport = {
-        id: parseInt(fields[0]),
-        name: fields[1].replace(/"/g, ''),
-        city: fields[2].replace(/"/g, ''),
-        country: fields[3].replace(/"/g, ''),
-        code: fields[4].replace(/"/g, ''),
-        iata: fields[5].replace(/"/g, ''),
-        lat: parseFloat(fields[6]),
-        lon: parseFloat(fields[7]),
-        elevation: parseInt(fields[8]),
-        timezone: fields[11].replace(/"/g, ''),
-      };
-
-      return airport;
-    }
-
-    return null;
-  });
-
-  return airports.filter((airport) => airport !== null);
-};
-
-export function AirportFinder()  {
+export function AirportFinder  ()  {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [specifiedLocation, setSpecifiedLocation] = useState('');
   const [nearbyAirports, setNearbyAirports] = useState([]);
-  const [parsedAirportsData, setParsedAirportsData] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const searchButtonRef = useRef(null); // Creating a ref for the search button
+  const searchButtonRef = useRef(null); // To Create a ref for the search button
+  const dropdownRef = useRef(null);
+
 
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
     const R = 6371; // Radius of the Earth in kilometers
@@ -74,63 +36,84 @@ export function AirportFinder()  {
     return distance;
   };
 
-  const fetchNearbyAirports = (parsedAirportsData, location) => {
-    const [lat, lon] = location.split(',').map(parseFloat);
-
-    const nearby = parsedAirportsData.filter((airport) => {
-      const distance = calculateDistance(lat, lon, airport.lat, airport.lon);
-      return distance <= 10000; 
-    });
-
-    console.log(nearby);
-
-    setNearbyAirports(nearby);
-  };
-
-  const parseLocation = (location) => {
-    const [lat, lon] = location.split(',').map(parseFloat);
-    return { lat, lon };
-  };
-
-  useEffect(() => {
-    // Fetch current location or use specified location
-    const location = currentLocation || specifiedLocation;
-    if (location) {
-      // Fetch nearby airports based on the location
-      fetchNearbyAirports(parsedAirportsData, location);
+  const fetchNearbyAirports = (location) => {
+    if (!location) {
+      return; // Exit the function if location is empty
     }
-  }, [currentLocation, specifiedLocation]);
+    const [lat, lon] = location.split(',').map(parseFloat);
 
-  useEffect(() => {
     // Fetch airport data from the API endpoint
     axios
-      .get('/api/airports')
+      .get('http://localhost:3000/api/airports')
       .then((response) => {
         const airportsData = response.data;
-        const parsedData = parseAirportData(airportsData);
-        setParsedAirportsData(parsedData);
+        const selectedCityAirports = airportsData.filter((airport) => airport.city === location);
+
+        const nearby = airportsData.filter((airport) => {
+          const distance = calculateDistance(lat, lon, airport.location.coordinates[1], airport.location.coordinates[0]);
+          return distance <=100; 
+        });
+
+        const mergedAirports = [...selectedCityAirports, ...nearby];
+
+      console.log(mergedAirports);
+
+      setNearbyAirports(mergedAirports);
+
+    
+      })
+      .catch((error) => {
+        console.log('Error fetching airport data:', error);
+      });
+  };
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:3000/api/airports')
+      .then((response) => {
+        const airportsData = response.data;
+        const cityNames = [...new Set(airportsData.map((airport) => airport.city))];
+        setCities(cityNames);
       })
       .catch((error) => {
         console.log('Error fetching airport data:', error);
       });
   }, []);
 
-  const handleLocationChange = (event) => {
-    setSpecifiedLocation(event.target.value);
+  useEffect(() => {
+    // Fetch current location or use specified location
+    const location = currentLocation || specifiedLocation;
+    if (location) {
+      // Fetch nearby airports based on the location
+      fetchNearbyAirports(location);
+    }
+  }, [currentLocation, specifiedLocation]);
+
+  const handleLocationChange = (event,data) => {
+    setSpecifiedLocation(data.value);
+    setDropdownOpen(false);
   };
 
-  console.log(parsedAirportsData);
-
-  const locationOptions = parsedAirportsData.map((airport) => ({
-    key: airport.code,
-    text: `${airport.city}, ${airport.country}`,
-    value: `${airport.lat},${airport.lon}`,
-  }));
-
   const handleSearch = () => {
-    console.log('Parsed Airports Data:', parsedAirportsData);
     console.log('Specified Location:', specifiedLocation);
-    fetchNearbyAirports(parsedAirportsData, specifiedLocation);
+    if (specifiedLocation) {
+      fetchNearbyAirports(specifiedLocation);
+    } else {
+      fetchNearbyAirports(currentLocation);
+    }
+    
+     if (dropdownRef.current.handleClose) {
+      dropdownRef.current.handleClose(); 
+    }
+
+
+    const buttonElement = searchButtonRef.current;
+
+    // Disable the button to prevent multiple clicks
+    buttonElement.disabled = true;
+
+    // Enable the button after the operations are done
+    buttonElement.disabled = false;
   };
 
   const handleCurrentLocation = () => {
@@ -141,6 +124,8 @@ export function AirportFinder()  {
           const currentLocation = `${latitude},${longitude}`;
           console.log('Current Location:', currentLocation);
           setCurrentLocation(currentLocation);
+          setSpecifiedLocation('');
+        fetchNearbyAirports(currentLocation);
         },
         (error) => {
           console.log(error);
@@ -148,8 +133,8 @@ export function AirportFinder()  {
         }
       );
     } else {
-      
-      
+      // Geolocation is not supported by the browser
+      // Handle the case where geolocation is not available
     }
   };
 
@@ -157,13 +142,24 @@ export function AirportFinder()  {
     <div>
       <label style={{ fontSize: '20px', fontWeight: 'bold', color: 'black' }}>
         Search nearby airports:
-        <Input
-          type="text"
+        <Dropdown
+        ref={dropdownRef}
+          placeholder="Select location"
+          fluid
+          search
+          selection
+          options={cities.map((city) => ({
+            key: city,
+            text: city,
+            value: city,
+          }))}
           value={specifiedLocation}
           onChange={handleLocationChange}
-          placeholder="Enter location"
+          open={dropdownOpen} 
+          onOpen={() => setDropdownOpen(true)} 
+          onClose={() => setDropdownOpen(false)} 
         />
-        <Button primary onClick={handleSearch}>
+        <Button primary onClick={handleSearch} ref={searchButtonRef}>
           Search
         </Button>
       </label>
@@ -172,9 +168,9 @@ export function AirportFinder()  {
         Use Current Location
       </Button>
 
-      <List>
+      <List divided relaxed>
         {nearbyAirports.map((airport) => (
-          <List.Item key={airport.id}>
+          <List.Item key={airport._id}>
             <List.Content>
               <List.Header>{airport.name}</List.Header>
               <List.Description>{`${airport.city}, ${airport.country}`}</List.Description>

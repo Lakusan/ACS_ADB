@@ -22,16 +22,23 @@ const SERVER_PORT = process.env.SERVER_PORT;
 //Import Routes
 const testRoute = require('./routes/test');
 const opensky = require('./routes/opensky');
+const airportsRoute = require('./routes/airports');
+
+
+
 
 //Middleware
 app.use(express.json());
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: '*',
     
 }));
 //Route Middlewares
 app.use('/api', testRoute);
 app.use('/api', opensky);
+app.use('/api', airportsRoute);
+
+
 
 
 //Connect to MongoDB
