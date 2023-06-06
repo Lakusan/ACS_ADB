@@ -1,10 +1,13 @@
 const axios = require('axios');
 const redisServices = require('./redisServices');
-const redis = require('redis');
 require('dotenv').config();
 
 
 class FlightDataRTPubService {
+
+    // TODO: Singleton, State Machine, Redo if error in long intervall -> response to react
+    static sharedState = null;
+
     constructor(name) {
         this.name = name;
         console.log(`Class with name ${this.name} spawned`);
@@ -16,8 +19,6 @@ class FlightDataRTPubService {
         // callsign: { origin: "country" }
 
         // recursive call if data collection is done to restart the process
-
-
     }
 
     sleep(ms) {
@@ -32,7 +33,7 @@ class FlightDataRTPubService {
     }
 
     stopDataCollection() {
-
+        // TODO: What to do? -> CleanUp and release resources, close connections
     }
 
     async getDataFromAPI(endpoint) {
@@ -90,7 +91,6 @@ class FlightDataRTPubService {
         console.log("publishDataOnRedisChannel");
         const channel = process.env.REDIS_PUB_FLIGHT_RADAR;
         const redisClient = redisServices.redisConnector();
-        // publish stringified Data with ttl of 1 sec
         redisClient.publish(channel, data, (err) => {
             if (err) {
                 console.error('Error publishing data on Redis:', err);
