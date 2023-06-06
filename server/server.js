@@ -8,6 +8,9 @@ const neo4j = require('neo4j-driver');
 const redis = require('redis');
 const mongoose = require('mongoose');
 
+// Services 
+const FlightDataRTPubService = require('./services/FlightDataRTPubService');
+
 //Configuration
 const app = express();
 dotenv.config();
@@ -57,4 +60,8 @@ neo4jDriver.verifyConnectivity()
 app.listen(SERVER_PORT, () => console.log(`Server is running on PORT: ${SERVER_PORT}`));
 //docker run -d -p 6379:6379 --name myredis --network redisnet redis
 
+// Start Service for Flight Radar
+const flightDataRTPubService = new FlightDataRTPubService("flight radar");
+// const dataJson = flightDataRTPubService.parseAPIData('states/all');
+flightDataRTPubService.collectRTDataFromAPI();
 module.exports.app = app;
