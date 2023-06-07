@@ -16,16 +16,13 @@ const maxDistance = 300;
   async function findNearestAirports(longitude, latitude) {
     try {
       await client.connect();
-      console.log('Connected to MongoDB');
       const database = client.db(databaseName);
       const collection = database.collection(collectionName);
       const geoPoint = {
         type: 'Point',
         coordinates: [longitude, latitude],
       };
-  
-      // Find the nearest airports using the $geoNear aggregation
-      const pipeline = [
+        const pipeline = [
         {
           $geoNear: {
             near: geoPoint,
