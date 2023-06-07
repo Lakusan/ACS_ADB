@@ -3,23 +3,23 @@ import axios from 'axios';
 //import "bootstrap/dist/css/bootstrap.min.css";
 import "./Style.css";
 
-const SearchFlight = () => {
+const RealTime = () => {
   const [airports, setAirports] = useState([]);
   const [selectedAirport, setSelectedAirport] = useState(null);
   const [searchResult, setSearchResult] = useState([]);
 
   // Fetch airports data from OpenSky Network API
   useEffect(() => {
-    fetch('/api/data',
+    axios
+      .get('https://opensky-network.org/api/flights/arrival',
       {
         auth: {
           username: 'ugurcankaya ',
           password: '=e7h@c9@$Tr4Tu=iglje',
         },}
         )
-        .then(response => response.json())
-      .then((data) => {
-        setAirports(data);
+      .then((response) => {
+        setAirports(response.data);
       })
       .catch((error) => {
         console.error('Error fetching airports:', error);
@@ -59,7 +59,7 @@ const SearchFlight = () => {
         const { latitude, longitude } = position.coords;
         // Send API request to OpenSky Network for flights
         axios
-          .get('https://opensky-network.org/api/states/all',
+          .get('https://opensky-network.org/api/flight',
           {
             auth: {
               username: 'ugurcankaya ',
@@ -134,12 +134,14 @@ const SearchFlight = () => {
           <tbody>
           {searchResult.map((flight) => (
               <tr>
-                <td>{flight[0]}</td>
-                <td>{flight[1]}</td>
-                <td>{flight[2]}</td>
-                {/* <td>{flight[4]}</td> */}
-                <td>{formatTimestamp(flight[4])}</td>
-                <td>{formatTimestamp(flight[3])}</td>
+                <td>{flight.airline}</td>
+                <td>{flight.flightNumber}</td>
+                <td>{flight.departureCity}</td>
+                <td>{flight.arrivalCity}</td>
+                <td>{formatTimestamp(flight.departureTime)}</td>
+                <td>{formatTimestamp(flight.arrivalTime)}</td>
+                <td>{flight.gate}</td>
+                <td>{flight.status}</td>
               </tr>
             ))}
           </tbody>
@@ -163,4 +165,4 @@ const SearchFlight = () => {
   );
 };
 
-export default SearchFlight;
+export default RealTime;

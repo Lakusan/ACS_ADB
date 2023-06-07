@@ -22,16 +22,25 @@ const SERVER_PORT = process.env.SERVER_PORT;
 //Import Routes
 const testRoute = require('./routes/test');
 const opensky = require('./routes/opensky');
+const airportsRoute = require('./routes/airports');
+const flightRoutes = require('./routes/flightRoutes')
+
+
+
 
 //Middleware
 app.use(express.json());
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: '*',
     
 }));
 //Route Middlewares
 app.use('/api', testRoute);
 app.use('/api', opensky);
+app.use('/api', airportsRoute);
+app.use('/api', flightRoutes);
+
+
 
 
 //Connect to MongoDB
@@ -70,4 +79,3 @@ neo4jDriver.verifyConnectivity()
 app.listen(SERVER_PORT, () => console.log(`Server is running on PORT: ${SERVER_PORT}`));
 //docker run -d -p 6379:6379 --name myredis --network redisnet redis
 module.exports.app = app;
-
