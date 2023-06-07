@@ -8,7 +8,17 @@ const collectionName = 'airports';
 const uri = process.env.MONGODB_CONNECT
 const client = new MongoClient(uri);
 
+// Author: Ugurcan Kaya 
+// Date: 07.06.2023
+// Description: Find route between two airports based on the given 2 points
 
+/* 
+Example Request: 
+     Origin Location: latitide0, longitude0 -> i have to create a point from this
+    Destination Location: latitude1, longitude1 -> another point needed
+        /api/route/latitude0/longitude0/latitude1/longitude1
+    http://localhost:5000/api/route/49.40168669371846/8.69130740388216/1.3091892785440247/103.66020789829463
+*/
 
 //find nearest airport based on the given point on mongodb
 
@@ -151,8 +161,11 @@ try{
     //calculate the distance between the two airports
     calculateDistance(airport1[0].icao, airport2[0].icao)
     .then(ret => {
-
-    res.json(ret)
+      if(ret.kmDistance < 200.0){
+        res.json({error: "Distance between the two airports is less than 200km."});
+      }else{
+           res.json(ret)
+      }
     })
     .catch(error => {
       console.error('Error:', error);
