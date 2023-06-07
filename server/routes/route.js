@@ -22,7 +22,7 @@ Example Request:
 
 //find nearest airport based on the given point on mongodb
 
-const maxDistance = 500;
+const maxDistance = 1000;
   async function findNearestAirports(longitude, latitude) {
     try {
       await client.connect();

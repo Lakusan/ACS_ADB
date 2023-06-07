@@ -142,9 +142,10 @@ export function RoutePlanner() {
           <p><strong>City:</strong> {routeInfo.origin.properties.city} to {routeInfo.destination.properties.city}  </p>
 
           <p><strong>Distance:</strong> { Math.round(routeInfo.kmDistance)} km</p>
-          <p><strong>A320 Neo Estimated Flight Time:</strong> {routeInfo.hours}hours { Math.round(routeInfo.minutes)} minutes</p>
+          <p><strong>A320 Neo Estimated Flight Time:</strong> {routeInfo.hours} hours { Math.round(routeInfo.minutes)} minutes</p>
           <p><strong>A320 Neo Estimated Fuel Consumption:</strong> { Math.round(routeInfo.fuelConsumption)} L</p>
           <p><strong>A320 Neo Estimated Fuel Cost:</strong> { Math.round(routeInfo.fuelCost)} Euro</p>
+          <p>{routeInfo.flightStatus}</p>
 
 
           
@@ -191,14 +192,18 @@ export function RoutePlanner() {
 
           
             <Polyline positions={[positionA, departureAirportLocation]} color="green" >
-              <Tooltip>Distance to Departure Airport:</Tooltip>
+              <Tooltip>Distance to Departure Airport: { Math.round(positionA.distanceTo(departureAirportLocation))/1000} km</Tooltip>
             </Polyline>
             <Polyline positions={[positionB, destinationAirportLocation]} color="green">
-              <Tooltip>Distance to Departure Airport:</Tooltip>
+              <Tooltip>Distance to Departure Airport: {Math.round(positionB.distanceTo(destinationAirportLocation)/1000)} km</Tooltip>
             </Polyline>
 
 
-            <Polyline positions={[departureAirportLocation, destinationAirportLocation]} color="red" />
+            <Polyline positions={[departureAirportLocation, destinationAirportLocation]} color="red" >
+               <Tooltip>Route Distance: {Math.round(routeInfo.kmDistance)} km</Tooltip>
+
+
+            </Polyline>
 
 
 
