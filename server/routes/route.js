@@ -47,11 +47,9 @@ async function calculateDistance(icao1, icao2) {
 router.get('/route/:airport1/:airport2',  async (req,res) => {
     const airport1 = (req.params.airport1).toUpperCase();
     const airport2 = (req.params.airport2).toUpperCase();
-
-
     calculateDistance(airport1, airport2)
-  .then(distance => {
-    res.json(distance);
+  .then(ret => {
+   res.json(ret)
   })
   .catch(error => {
     console.error('Error:', error);
