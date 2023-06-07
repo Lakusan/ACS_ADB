@@ -24,8 +24,8 @@ export function RoutePlanner() {
   });
 
   // Markers
-  const [positionA, setPositionA] = useState([49.41386, 8.65164]);
-  const [positionB, setPositionB] = useState([49.91386, 8.95164]);
+  const [positionA, setPositionA] = useState([50.0380, 8.5622]);
+  const [positionB, setPositionB] =  useState([41.2768, 28.7300]);
 
   const markerRefA = useRef(null);
   const markerRefB = useRef(null);
@@ -63,7 +63,6 @@ export function RoutePlanner() {
     []
   );
 
-  // Actions
 
   const handleReset = () => {
     window.location.reload();
@@ -81,6 +80,7 @@ export function RoutePlanner() {
   const [departureInfo, setDepartureInfo] = useState(null);
   const [destinationInfo, setDestinationInfo] = useState(null);
 
+  const [routeInfo, setRouteInfo] = useState(null);
   const handleCreate = () => {
     setLoading(true);
     setRouteFound(false);
@@ -101,6 +101,12 @@ export function RoutePlanner() {
           console.log(departureInfo, destinationInfo)
           setRouteFound(true);
           console.log('Route found', res.data);
+
+
+          setRouteInfo(res.data);
+       
+
+
         } else {
           console.log('No route found', res.data);
         }
@@ -121,7 +127,34 @@ export function RoutePlanner() {
       <h1>Route Planner</h1>
       <button onClick={handleReset}>Reset</button>
       <button onClick={handleCreate}>Create Route</button>
-      <MapContainer center={[49.41386, 8.65164]} zoom={9} style={{ height: '600px' }}>
+
+
+    
+
+      
+    {routeInfo ? (
+          <>
+
+          <h2>Route Information</h2>
+          <p><strong>From:</strong> {routeInfo.origin.properties.name} - {routeInfo.origin.properties.icao}  </p>
+          <p><strong>To:</strong> {routeInfo.destination.properties.name} - {routeInfo.destination.properties.icao}</p>
+
+          <p><strong>City:</strong> {routeInfo.origin.properties.city} to {routeInfo.destination.properties.city}  </p>
+
+          <p><strong>Distance:</strong> { Math.round(routeInfo.kmDistance)} km</p>
+          <p><strong>A320 Neo Estimated Flight Time:</strong> {routeInfo.hours}hours { Math.round(routeInfo.minutes)} minutes</p>
+          <p><strong>A320 Neo Estimated Fuel Consumption:</strong> { Math.round(routeInfo.fuelConsumption)} L</p>
+          <p><strong>A320 Neo Estimated Fuel Cost:</strong> { Math.round(routeInfo.fuelCost)} Euro</p>
+
+
+          
+          
+
+          </>
+        ) : null}
+
+
+      <MapContainer center={[45.7489, 21.2087]} zoom={5} style={{ height: '600px' }}>
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution="Map data &copy; <a href='https://www.openstreetmap.org/'>OpenStreetMap</a> contributors" />
 
         {!loading && !routeFound ? (
@@ -173,6 +206,8 @@ export function RoutePlanner() {
           </>
         ) : null}
       </MapContainer>
+
+
     </>
   );
 }
