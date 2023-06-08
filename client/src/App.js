@@ -41,7 +41,7 @@ function App() {
       <Route path="/route" element={<RoutePlanner />} />
       <Route path="/airport/finder" element={<AirportFinder />} />
       <Route path="/flight" element={<FlightFinder />} />
-      <Route path="/tracker/:icao24" element={<FlightTracker />} />
+      <Route path="/tracker/:iata" element={<FlightTracker />} />
       <Route path="/airport/info" element={<AirportInformation />} />
     </Routes>
     </>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Polyline,Tooltip  } from 'react-leaflet';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
@@ -12,9 +12,14 @@ export function FlightTracker() {
     popUp: 'SRH Heidelberg',
   };
 
-  let { icao24 } = useParams();
+  const airport = new Icon({
+    iconUrl: require('../resources/airport.png'),
+    iconSize: [35, 35]
+  });
 
-  console.log(icao24);
+  let { iata } = useParams();
+
+  
 
   const srhIcon = new Icon({
     iconUrl:
@@ -33,8 +38,8 @@ export function FlightTracker() {
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get('http://localhost:5000/api/opensky/flights/' + icao24);
-      setData(response.data);
+      const response = await axios.get('http://localhost:5000/api/opensky/flights/' + iata);
+      setData(await response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
     } finally {
@@ -50,6 +55,46 @@ export function FlightTracker() {
     fetchData();
   };
 
+  async function fetchAirportInfo(iata) {
+    try {
+      const response = await fetch(`http://localhost:5000/api/opensky/airportInfo/${iata}`);
+      
+      if (!response.ok) {
+        throw new Error('Request failed');
+      }
+      
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+      // Handle the error appropriately (e.g., show an error message)
+    }
+  }
+
+  const [departureAirportInfo, setDepartureAirportInfo] = useState(null);
+  const [arrivalAirportInfo, setArrivalAirportInfo] = useState(null);
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (data) {
+        if (data?.data[0].departure.iata && data?.data[0].arrival.iata) {
+        
+          const departureDataRes = await fetchAirportInfo(data?.data[0].departure.iata);
+          const arrivalDataRes = await fetchAirportInfo(data?.data[0].arrival.iata);
+            setDepartureAirportInfo(departureDataRes)
+            setArrivalAirportInfo(arrivalDataRes)
+
+          console.log(departureDataRes);
+          console.log(arrivalDataRes);
+        }
+      }
+    };
+  
+    fetchData();
+  }, [data]);
+  
+
   return (
     <div className="App">
       <div>
@@ -57,22 +102,67 @@ export function FlightTracker() {
           <p>Fetching Data...</p>
         ) : (
           <>
+        
             <MapContainer
-              center={data?.data ? [data.data.latitude, data.data.longitude] : srhLocation.geocode}
-              zoom={10}
-              style={{ height: '400px' }}
+              center={data?.data[0].live ? [data.data[0].live.latitude, data.data[0].live.longitude] : srhLocation.geocode}
+              zoom={4}
+              style={{ height: '700px' }}
             >
               <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution="Map data &copy; <a href='https://www.openstreetmap.org/'>OpenStreetMap</a> contributors"
               />
-              {data?.data.latitude && data?.data.longitude ? (
-                <Marker position={[data.data.latitude, data.data.longitude]} icon={airPlaneIcon}>
-                  <Popup>{data.data.icao24}</Popup>
-                </Marker>
-              ) : (
-                <Marker position={srhLocation.geocode} icon={srhIcon}></Marker>
-              )}
+
+              
+
+
+
+
+
+
+
+{departureAirportInfo && arrivalAirportInfo ? (
+          <>
+
+
+
+            <Marker position={[departureAirportInfo.location.coordinates[1], departureAirportInfo.location.coordinates[0]]} icon={airport}>
+             <Popup>
+
+              <h3>Departure: {departureAirportInfo.name} {departureAirportInfo.iata}</h3>
+              <p>{departureAirportInfo.city}</p>
+              <p></p>
+
+             </Popup>
+            </Marker>
+
+            <Marker position={[arrivalAirportInfo.location.coordinates[1], arrivalAirportInfo.location.coordinates[0]]} icon={airport}>
+            
+            <Popup>
+            <h3>Arrival: {arrivalAirportInfo.name} {arrivalAirportInfo.iata}</h3>
+              <p>{arrivalAirportInfo.city}</p>
+   
+              </Popup>
+             </Marker>
+     
+             <Polyline positions={[[departureAirportInfo.location.coordinates[1], departureAirportInfo.location.coordinates[0]], [arrivalAirportInfo.location.coordinates[1], arrivalAirportInfo.location.coordinates[0]]]} color="green" >
+              <Tooltip>Distance to Departure Airport</Tooltip>
+            </Polyline>
+
+
+          
+           
+
+
+
+
+
+
+          </>
+        ) : null}
+          
+             
+          
             </MapContainer>
             <pre>{JSON.stringify(data, null, 2)}</pre>
           </>
