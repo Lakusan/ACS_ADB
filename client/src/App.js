@@ -25,7 +25,7 @@ function App() {
           <Link to="/flight"> Flight Finder Satish </Link>
         </li>
         <li>
-          <Link to="/tracker"> Flight Tracker Ugurcan </Link>
+          <Link to="/tracker/"> Flight Tracker Ugurcan </Link>
         </li>
         <li>
           <Link to="/route"> Route Planning Ugurcan </Link>
@@ -41,7 +41,7 @@ function App() {
       <Route path="/route" element={<RoutePlanner />} />
       <Route path="/airport/finder" element={<AirportFinder />} />
       <Route path="/flight" element={<FlightFinder />} />
-      <Route path="/tracker" element={<FlightTracker />} />
+      <Route path="/tracker/:icao24" element={<FlightTracker />} />
       <Route path="/airport/info" element={<AirportInformation />} />
     </Routes>
     </>
