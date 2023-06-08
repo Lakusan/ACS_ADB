@@ -17,6 +17,7 @@
     "mongoose": "^7.1.1",
     "neo4j-driver": "^5.8.0",
     "redis": "^4.6.6",
-    "socket.io": "^4.6.1"
+    "socket.io": "^4.6.1",
+    "ws": "^8.13.0"
   }
 }
