@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Dropdown } from 'semantic-ui-react';
-import "./Style.css";
+import "../components/Style.css";
 
-export function New() {
+export function AirportInformation() {
   const [flightData, setFlightData] = useState(null);
   const [departureCities, setDepartureCities] = useState([]);
   const [selectedDepartureCity, setSelectedDepartureCity] = useState('');
@@ -87,10 +87,19 @@ export function New() {
     );
   }
 
+  const formatTime = (timeString) => {
+    const options = {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+    };
+    return new Date(timeString).toLocaleTimeString(undefined, options);
+  };
+
   return (
     <div>
       <Dropdown
-        placeholder="Select Departure City"
+        placeholder="Select City"
         fluid
         selection
         options={[
@@ -104,10 +113,11 @@ export function New() {
         value={selectedDepartureCity}
         onChange={handleDepartureCityChange}
       />
-      <button onClick={handleCurrentLocation}>Use Current Location</button>
-      {filteredFlights ? (
+      {/* <button onClick={handleCurrentLocation}>Use Current Location</button> */}
+
+      
+      {filteredFlights  && (
         <div className="table-container">
-        <h3>Search Result</h3>
         <table className="transaction-table">
           <thead>
             <tr>
@@ -122,26 +132,28 @@ export function New() {
             </tr>
           </thead>
           <tbody>
-          {filteredFlights.map((flight) => (
+        
+        {filteredFlights.map((flight) => (
+          
               <tr>
                 <td>{flight.airline}</td>
                 <td>{flight.flightNumber}</td>
                 <td>{flight.departureCity}</td>
                 <td>{flight.arrivalCity}</td>
-                <td>{flight.departureTime}</td>
-                <td>{flight.arrivalTime}</td>
+                <td>{formatTime(flight.departureTime)}</td>
+                <td>{formatTime(flight.arrivalTime)}</td>
                 <td>{flight.gate}</td>
                 <td>{flight.status}</td>
               </tr>
+
             ))}
-          </tbody>
+             </tbody>
         </table>
-      </div>
+        </div>
         
       )
-       : (
-        <p>Loading flight data...</p>
-      )}
+      }
+     
     </div>
   );
 }
