@@ -74,7 +74,8 @@ router.get('/opensky/flights/:iata', async (req, res) => {
     const response = await axios.get(`http://api.aviationstack.com/v1/flights`, {
       params: {
         access_key: process.env.AVISTACK_API_KEY,
-        flight_iata: iata,
+        flight_iata: iata
+
       }
     });
 
@@ -108,7 +109,7 @@ try{
     res.status(500).json({ error: 'An error occurred while retrieving airport data' });
   }
   );
-  
+
 
 }catch(error){
   console.error('Error retrieving airport data:', error);
