@@ -75,7 +75,7 @@ export function FlightTracker() {
   const [departureAirportInfo, setDepartureAirportInfo] = useState(null);
   const [arrivalAirportInfo, setArrivalAirportInfo] = useState(null);
 
-  const latestFlight = data?.data[data?.data.length - 1];
+  const latestFlight = data?.data[0];
 
   useEffect(() => {
     const fetchData = async () => {
