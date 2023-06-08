@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
 import { Icon } from 'leaflet';
-
+import "./style.css"
 export function FlightTracker() {
   const srhLocation = {
     geocode: [49.41386, 8.65164],
@@ -189,7 +189,6 @@ export function FlightTracker() {
                     ]}
                     color="green"
                   >
-                    <Tooltip>Distance to Departure Airport</Tooltip>
                   </Polyline>
                 </>
               ) : null}
@@ -314,7 +313,7 @@ export function FlightTracker() {
 
 
 
-            <h3>Source: {JSON.stringify(data.source, null, 2)}</h3>
+            <h3>Source: {JSON.stringify(data?.source, null, 2)}</h3>
 
 
             
