@@ -5,7 +5,7 @@ import { AirportFinder } from './pages/AirportFinder';
 import { FlightFinder } from './pages/FlightFinder';
 import { FlightTracker } from './pages/FlightTracker';
 import { AirportInformation } from './pages/AirportInformation';
-
+import { RoutePlanner } from './pages/RoutePlanner';
 
 function App() {
   return (
@@ -28,6 +28,9 @@ function App() {
           <Link to="/tracker/"> Flight Tracker Ugurcan </Link>
         </li>
         <li>
+          <Link to="/route"> Route Planning Ugurcan </Link>
+        </li>
+        <li>
           <Link to="/airport/info"> Airport information Monisha </Link>
         </li>
       </ul>
@@ -35,6 +38,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/radar" element={<FlightRadar />} />
+      <Route path="/route" element={<RoutePlanner />} />
       <Route path="/airport/finder" element={<AirportFinder />} />
       <Route path="/flight" element={<FlightFinder />} />
       <Route path="/tracker/:icao24" element={<FlightTracker />} />
