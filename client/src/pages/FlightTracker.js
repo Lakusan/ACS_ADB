@@ -315,7 +315,7 @@ export function FlightTracker() {
 
             <h3>Source: {JSON.stringify(data?.source, null, 2)}</h3>
 
-
+            <pre>Source: {JSON.stringify(data, null, 2)}</pre>
             
           </>
         )}
