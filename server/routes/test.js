@@ -7,8 +7,6 @@ router.get('/test',  async (req,res) => {
 });
 
 router.get('/flight/search', async (req, res) => {
-    // query mongoDB
-    // compute Data 
     res.send(data);
 })
 
