@@ -16,6 +16,5 @@ module.exports.redisConnector = function () {
   }
   );
 
-  redisClient.on('connect', () => console.log('Connected to Redis Server'));
   return redisClient;
 }
