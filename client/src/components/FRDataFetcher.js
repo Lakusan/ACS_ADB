@@ -1,31 +1,33 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import io from 'socket.io-client';
 
-function FRDataFetcher() {
+const FRDataFetcher = () => {
+  const [data, setData] = useState(null);
+  const backendURL = process.env.REACT_APP_SERVER_HOSTNAME + ":" + process.env.REACT_APP_SERVER_PORT;
+  const socket = io(backendURL);
 
-    const [ posts, setPosts ] = useState([]);
+  useEffect(() => {
+    // 
+    socket.on('connect', () => {
+      console.log('Socket connected');
+    });
 
-    useEffect(() => {
-        axios.get('http://localhost:3000/api/flights/radar')
-            .then( res => {
-                console.log(res);
-                setPosts(res.data);
-            })
-            .catch ( err => {
-                console.error(err);
-            })
-    })
+    socket.on('data', (receivedData) => {
+      setData(receivedData);
+    });
 
-    return ( 
-        // <div>
-        //     <ul>
-        //         {
-        //             // posts.map(post => <li key={post.id}>{post.title}</li>)
-        //         }
-        //     </ul>
-        // </div>
-        "OK"
-    )
-}
+    // disconnect socket
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
+  return (
+    <div>
+      {data && <p>{data}</p>}
+      {!data && <p>Loading...</p>}
+    </div>
+  );
+};
 
 export default FRDataFetcher;
