@@ -11,7 +11,7 @@ class FlightRadar extends React.Component {
     super(props);
     this.state = {
       markers: [],
-      prevMarkers : [],
+      prevMarkers: [],
       srhLocation: {
         geocode: [49.41386, 8.65164],
         popUp: "SRH Heidelberg"
@@ -20,53 +20,41 @@ class FlightRadar extends React.Component {
         iconUrl: 'https://www.srh-hochschule-heidelberg.de/typo3conf/ext/site_srh_edu/Resources/Public/Favicons/apple-touch-icon-hochschule.png',
         iconSize: [38, 38]
       }),
-      airplaneIcon: new Icon({
+      airplaneIcon: new L.Icon({
         iconUrl: require('../resources/icon-airplane.png'),
-        iconSize: [48, 48]
+        iconSize: [48, 48],
+        iconAnchor: [24, 24],
       }),
     };
-    this.markerRef = createRef();    
-  }
-
-  componentDidMount() {
-    if (this.markerRef.current) {
-      const icon = Icon({
-        iconUrl: require('../resources/icon-airplane.png'),
-        iconSize: [48, 48]
-      });
-
-      this.markerRef.current.setIcon(icon);
-    }
   }
 
   handleDataReceived = (data) => {
     const parsedData = JSON.parse(data);
-    this.setState({prevMarkers: this.state.markers});
+    this.setState({ prevMarkers: this.state.markers });
     this.setState({ markers: parsedData });
     const entryCount = Object.keys(parsedData).length;
     console.log(entryCount);
   };
 
-
   renderMarkers() {
-    const {  markers, airplaneIcon } = this.state;
-      const markerElements = [];
-      Object.entries(markers).forEach((marker) => {
-        const position = [marker[1].latitude, marker[1].longitude];
-        markerElements.push(
-          <Marker key={marker[0]} position={position} icon={airplaneIcon}>
-            <Popup>
-              Callsign: {marker[0]}<br />
-              Latitude: {marker[1].latitude}<br />
-              Longitude: {marker[1].longitude}<br />
-              Altitude: {marker[1].altitude}<br />
-              ICAO24: {marker[1].icao24}<br />
-              Origin Country: {marker[1].originCountry}
-            </Popup>
-          </Marker>
-        );
-      })
-      return markerElements;
+    const { markers, airplaneIcon } = this.state;
+    const markerElements = [];
+    Object.entries(markers).forEach((marker) => {
+      const position = [marker[1].latitude, marker[1].longitude];
+      markerElements.push(
+        <Marker key={marker[0]} position={position} icon={airplaneIcon} rotationAngle={45}>
+          <Popup>
+            Callsign: {marker[0]}<br />
+            Latitude: {marker[1].latitude}<br />
+            Longitude: {marker[1].longitude}<br />
+            Altitude: {marker[1].altitude}<br />
+            ICAO24: {marker[1].icao24}<br />
+            Origin Country: {marker[1].originCountry}
+          </Popup>
+        </Marker>
+      );
+    })
+    return markerElements;
   }
 
   //[49.41386, 8.65164] srh
@@ -99,11 +87,10 @@ class FlightRadar extends React.Component {
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution="Map data &copy; <a href='https://www.openstreetmap.org/'>OpenStreetMap</a> contributors"
-            />
-          <Marker position={[51.505, -0.09]} ref={this.markerRef} />
+          />
           <Marker position={this.state.srhLocation.geocode} icon={this.state.srhIcon}>
             <Popup>
-              {/* {this.state.srhLocation.popUp} */}
+              {this.state.srhLocation.popUp}
             </Popup>
           </Marker>
           {this.renderMarkers()}
