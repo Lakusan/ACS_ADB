@@ -1,43 +1,39 @@
 const axios = require('axios');
+const EventEmitter = require('events');
 const redisServices = require('./redisServices');
+const { isLocalTime } = require('neo4j-driver');
 require('dotenv').config();
 
 
-class FlightDataRTPubService {
+class FlightDataRTPubService extends EventEmitter {
 
-    // TODO: Singleton, State Machine, Redo if error in long intervall -> response to react
-    static sharedState = null;
+    static getInstance() {
+        if (!FlightDataRTPubService.instance) {
+            FlightDataRTPubService.instance = new FlightDataRTPubService();
+        }
+        return FlightDataRTPubService.instance;
+    }
 
-    constructor(name) {
-        this.name = name;
-        console.log(`Class with name ${this.name} spawned`);
-        // redisServices.redisConnect();
-        // fetches data from api,
-        // json stringify
-        // stores data in redis
-        // json parse
-        // callsign: { origin: "country" }
-
-        // recursive call if data collection is done to restart the process
+    constructor() {
+        super();
+        this.state = 'idle';
     }
 
     sleep(ms) {
+        this.state = 'sleeping';
+        this.emit('sleeping');
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
     async collectRTDataFromAPI() {
-        console.log("Start Data Collection")
         await this.parseAPIData('states/all');
         await this.sleep(process.env.API_REFRESH_RATE);
         await this.collectRTDataFromAPI();
     }
 
-    stopDataCollection() {
-        // TODO: What to do? -> CleanUp and release resources, close connections
-    }
-
     async getDataFromAPI(endpoint) {
-        console.log("getDataFromAPI");
+        this.state = 'fetching';
+        this.emit('fetching');
         const apiURL = process.env.API_BASE_URL + endpoint;
 
         try {
@@ -55,31 +51,21 @@ class FlightDataRTPubService {
     }
 
     parseAPIData(endpoint) {
-        console.log("parseAPIData");
         this.getDataFromAPI(endpoint)
             .then((data) => {
                 const parsedData = data.states.map(state => ({
-                    icao24: state[0],
-                    callsign: state[1].replace(/\s/g, ''), // Remove spaces from the flight callsign
-                    originCountry: state[2],
-                    longitude: state[5],
-                    latitude: state[6],
-                    altitude: state[7]
+                    callsign: state[1].replace(/\s/g, ''),
+                    data: {
+                        longitude: state[5],
+                        latitude: state[6],
+                        altitude: state[7],
+                        icao24: state[0],
+                        originCountry: state[2],
+                    }
                 }))
-                this.publishDataOnRedisChannel(JSON.stringify(parsedData));
-                // console.log(Object.entries(data)[0]);
-                // console.log(data.states);
-                // let tmpJSON = {};
-                // parsedData.forEach(element => {
-                //     if (element.callsign !== ''){
-                //         console.log(`{${element.callsign}:{ longitude: ${element.longitude},latitude:${element.latitude}}`);
-                //     } 
-                // });
-                // console.log(parsedData[0].callsign);
-                // console.log(parsedData[0].longitude);
-                // console.log(parsedData[0].latitude);
-                // callsign longitide latitude
-                // GLO1251: { longitude: -47.7574, latitude: -23.6635}
+                // const filteredData = parsedData.filter(item => item.data.longitude && item.data.latitude);
+                const obj = this.convertArrayToObject(parsedData);
+                this.publishDataOnRedisChannel(JSON.stringify(obj));
             })
             .catch((error) => {
                 console.error("Error Fetching Data", error);
@@ -88,17 +74,37 @@ class FlightDataRTPubService {
     }
 
     publishDataOnRedisChannel(data) {
-        console.log("publishDataOnRedisChannel");
+        this.state = 'publishing';
+        this.emit('publishing');
         const channel = process.env.REDIS_PUB_FLIGHT_RADAR;
         const redisClient = redisServices.redisConnector();
         redisClient.publish(channel, data, (err) => {
             if (err) {
                 console.error('Error publishing data on Redis:', err);
             } else {
-                console.log('Data published on Redis');
+                redisClient.expire(channel, process.env.REDIS_FR_TTL);
             }
         })
     }
+
+    convertArrayToObject(dataArray) {
+        const jsonObject = {};
+      
+        for (const item of dataArray) {
+          if (item.callsign && item.data && item.data.longitude && item.data.latitude && item.data.altitude) {
+            const marker = {
+              longitude: item.data.longitude,
+              latitude: item.data.latitude,
+              altitude: item.data.altitude,
+              icao24: item.data.icao24,
+              originCountry: item.data.originCountry,
+            };
+            jsonObject[item.callsign] = marker;
+          }
+        }
+      
+        return jsonObject;
+      }
 
 };
 
