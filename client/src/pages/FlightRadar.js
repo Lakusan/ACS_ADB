@@ -1,104 +1,117 @@
-import React, { useEffect, useState } from 'react';
-import '../App.css';
+import React, { Component, createRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet-rotatedmarker';
+import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Icon } from "leaflet";
-// import FRDataFetcher from '../components/FRDataFetcher';
-// import useSocketSetup from '../services/useSocketSetup';
-import axios from 'axios';
-// import socket from '../services/socket';
-import { io } from "socket.io-client";
-//TODO: connect to socket on backen and retrieve data stream
-// parse data and spawn markers
+import SocketReceiver from '../components/SocketReceiver';
 
-export function FlightRadar() {
-  // trigger subscription
-  axios.get('http://localhost:3000/api/flights/radar/subscribe');
-  // useSocketSetup();
+class FlightRadar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      markers: [],
+      prevMarkers : [],
+      srhLocation: {
+        geocode: [49.41386, 8.65164],
+        popUp: "SRH Heidelberg"
+      },
+      srhIcon: new Icon({
+        iconUrl: 'https://www.srh-hochschule-heidelberg.de/typo3conf/ext/site_srh_edu/Resources/Public/Favicons/apple-touch-icon-hochschule.png',
+        iconSize: [38, 38]
+      }),
+      airplaneIcon: new Icon({
+        iconUrl: require('../resources/icon-airplane.png'),
+        iconSize: [48, 48]
+      }),
+    };
+    this.markerRef = createRef();    
+  }
 
-  const urlBackend = process.env.REACT_APP_SERVER_HOSTNAME + ":" + process.env.REACT_APP_SERVER_PORT;
+  componentDidMount() {
+    if (this.markerRef.current) {
+      const icon = Icon({
+        iconUrl: require('../resources/icon-airplane.png'),
+        iconSize: [48, 48]
+      });
 
-  const socket = new io(urlBackend, {
-    // transports: ["websocket"],
-    autoConnect: true
-  });
-  const [receivedData, setReceivedData] = useState('');
-  socket.on('connect', () => {
-          socket.on('send_message', (data) => {
-            // console.log(data);
+      this.markerRef.current.setIcon(icon);
+    }
+  }
 
-            setReceivedData(data);
-            console.log(JSON.parse(data));
-          });
-        });
-
-  
-    useEffect(() => {
-      // socket.on('connect', () => {
-      //   socket.on('send_message', (data) => {
-      //     console.log(data);
-
-      //     setReceivedData(data);
-      //   });
-      // });
-      // socket.on('connect_error', () => {
-      //   console.error("Socket connection error");
-      // });
-      // return () => {
-      //   socket.off("connect_error");
-      // }
-      console.log("data");
-    }, [receivedData]);
-
-  return (
-    <div>
-      <h1>Flight Radar</h1>
-      <MapComponent />
-    </div>
-  );
-}
-
-export function MapComponent() {
-  const srhLocation =
-  {
-    geocode: [49.41386, 8.65164],
-    popUp: "SRH Heidelberg"
+  handleDataReceived = (data) => {
+    const parsedData = JSON.parse(data);
+    this.setState({prevMarkers: this.state.markers});
+    this.setState({ markers: parsedData });
+    const entryCount = Object.keys(parsedData).length;
+    console.log(entryCount);
   };
 
-  const srhIcon = new Icon({
-    iconUrl: 'https://www.srh-hochschule-heidelberg.de/typo3conf/ext/site_srh_edu/Resources/Public/Favicons/apple-touch-icon-hochschule.png',
-    iconSize: [38, 38]
-  });
 
-  const airplaneIcon = new Icon({
-    iconUrl: require('../resources/icon-airplane.png'),
-    iconSize: [48, 48]
-  })
-
-  return (
-    <div className='App'>
-      <MapContainer center={[49.41386, 8.65164]} zoom={13} style={{ height: '400px' }}>
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution="Map data &copy; <a href='https://www.openstreetmap.org/'>OpenStreetMap</a> contributors"
-        />
-        {
-          markers.map((marker) => {
-            <Marker position={marker.geocode} icon={srhIcon}>
-              <Popup>
-                BLA
-              </Popup>
-            </Marker>
-          })
-          
-     
-        }
-             <Marker position={srhLocation.geocode} icon={srhIcon}>
+  renderMarkers() {
+    const {  markers, airplaneIcon } = this.state;
+      const markerElements = [];
+      Object.entries(markers).forEach((marker) => {
+        const position = [marker[1].latitude, marker[1].longitude];
+        markerElements.push(
+          <Marker key={marker[0]} position={position} icon={airplaneIcon}>
             <Popup>
-              {srhLocation.popUp}
+              Callsign: {marker[0]}<br />
+              Latitude: {marker[1].latitude}<br />
+              Longitude: {marker[1].longitude}<br />
+              Altitude: {marker[1].altitude}<br />
+              ICAO24: {marker[1].icao24}<br />
+              Origin Country: {marker[1].originCountry}
             </Popup>
           </Marker>
-      </MapContainer>
-    </div>
-  );
+        );
+      })
+      return markerElements;
+  }
+
+  //[49.41386, 8.65164] srh
+  // 49.41238, 8.64777 hORNBACH
+  calculateDirectionVector(prevLat, prevLng, newLat, newLng){
+    const toRadians = (degrees) => (degrees * Math.PI / 180);
+    const toDegrees = (radians) => (radians * 180) / Math.PI;
+
+    const phi1 = toRadians(prevLat);
+    const phi2 = toRadians(newLat);
+    const deltaLambda = toRadians(newLng - prevLng);
+
+    const y = Math.sin(deltaLambda) * Math.cos(phi2);
+    const x =
+      Math.cos(phi1) * Math.sin(phi2) -
+      Math.sin(phi1) * Math.cos(phi2) * Math.cos(deltaLambda);
+    let bearing = Math.atan2(y, x);
+
+    bearing = toDegrees(bearing);
+    bearing = (bearing + 360) % 360;
+
+    return bearing;
+  }
+
+  render() {
+    return (
+      <div className='App'>
+        <h1>Flight Radar</h1>
+        <MapContainer center={this.state.srhLocation.geocode} zoom={8} style={{ height: '800px' }}>
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution="Map data &copy; <a href='https://www.openstreetmap.org/'>OpenStreetMap</a> contributors"
+            />
+          <Marker position={[51.505, -0.09]} ref={this.markerRef} />
+          <Marker position={this.state.srhLocation.geocode} icon={this.state.srhIcon}>
+            <Popup>
+              {/* {this.state.srhLocation.popUp} */}
+            </Popup>
+          </Marker>
+          {this.renderMarkers()}
+        </MapContainer>
+        <SocketReceiver onDataReceived={this.handleDataReceived} />
+      </div>
+    );
+  }
 }
+
+export default FlightRadar;
