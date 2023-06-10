@@ -12,13 +12,6 @@ const mongoose = require('mongoose');
 const app = express();
 const server = http.createServer(app);
 
-// socket.io server config
-// const io = new Server(server, {
-//   cors: {
-//     origin: '*',
-//     methods: ["GET", "POST"]
-//   }
-// });
 // Services 
 const FlightDataRTPubService = require('./services/FlightDataRTPubService');
 const FlightDataRTSubService = require('./services/FlightDataRTSubService');
