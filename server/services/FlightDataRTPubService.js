@@ -63,7 +63,6 @@ class FlightDataRTPubService extends EventEmitter {
                         originCountry: state[2],
                     }
                 }))
-                // const filteredData = parsedData.filter(item => item.data.longitude && item.data.latitude);
                 const obj = this.convertArrayToObject(parsedData);
                 this.publishDataOnRedisChannel(JSON.stringify(obj));
             })
