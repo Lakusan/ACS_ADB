@@ -1,4 +1,6 @@
-const router = require('express').Router();
+const express = require('express');
+const router = express.Router();
+const Airport = require('../models/airport');
 const { MongoClient } = require('mongodb');
 
 
@@ -78,12 +80,6 @@ router.get('/airports/:latitude/:longitude',  async (req,res) => {
       }
 
 });
-
-module.exports = router;
-const express = require('express');
-const router = express.Router();
-const Airport = require('../models/airport');
-
 
 // Defining the route handler for /api/airports
 router.get('/airports', async (req, res) => {
