@@ -23,6 +23,9 @@ const SERVER_PORT = process.env.SERVER_PORT;
 const testRoute = require('./routes/test');
 const opensky = require('./routes/opensky');
 const flightStatus = require('./routes/flights');
+const airports = require('./routes/airports');
+const route = require('./routes/route');
+
 
 //Middleware
 app.use(express.json());
@@ -31,6 +34,8 @@ app.use(cors());
 app.use('/api', testRoute);
 app.use('/api', opensky);
 app.use('/api', flightStatus);
+app.use('/api/', airports);
+app.use('/api/', route);
 
 
 //Connect to MongoDB
