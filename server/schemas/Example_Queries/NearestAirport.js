@@ -8,6 +8,7 @@ require('dotenv').config({ path: path.resolve(__dirname, '..', '..', '.env') });
 
 const uri = process.env.MONGODB_CONNECT // Replace with your MongoDB connection string
 
+
 // MongoDB database and collection names
 const databaseName = 'test'; // Replace with your database name
 const collectionName = 'airports'; // Replace with your collection name

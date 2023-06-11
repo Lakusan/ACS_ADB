@@ -1,4 +1,6 @@
-const router = require('express').Router();
+const express = require('express');
+const router = express.Router();
+const Airport = require('../models/airport');
 const { MongoClient } = require('mongodb');
 
 
@@ -71,11 +73,22 @@ router.get('/airports/:latitude/:longitude',  async (req,res) => {
         const result = await findNearestAirports(longitude, latitude);
         res.json(result);
    
+
     } catch (error) {
         console.error('An error occurred:', error);
          res.send(error)
       }
 
+});
+
+// Defining the route handler for /api/airports
+router.get('/airports', async (req, res) => {
+  try {
+    const airports = await Airport.find();
+    res.json(airports);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch airports' });
+  }
 });
 
 module.exports = router;

@@ -29,7 +29,11 @@ const route = require('./routes/route');
 
 //Middleware
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: '*',
+    
+}));
+
 //Route Middlewares
 app.use('/api', testRoute);
 app.use('/api', opensky);
