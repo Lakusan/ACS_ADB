@@ -3,10 +3,8 @@ const router = express.Router();
 const Airport = require('../models/airport');
 const { MongoClient } = require('mongodb');
 
-
 const databaseName = 'test'; 
 const collectionName = 'airports';
-
 
 const uri = process.env.MONGODB_CONNECT
 const client = new MongoClient(uri);
