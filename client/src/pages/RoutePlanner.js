@@ -87,9 +87,10 @@ export function RoutePlanner() {
 
     const originPoint = latLngToArray(positionA);
     const arrivalPoint = latLngToArray(positionB);
+    const backendURL = process.env.REACT_APP_SERVER_HOSTNAME + ":" + process.env.REACT_APP_SERVER_PORT;
 
     axios
-      .get(`http://localhost:5000/api/route/${originPoint[0]}/${originPoint[1]}/${arrivalPoint[0]}/${arrivalPoint[1]}`)
+      .get(`${backendURL}/api/route/${originPoint[0]}/${originPoint[1]}/${arrivalPoint[0]}/${arrivalPoint[1]}`)
       .then(res => {
         if (res.data?.origin?.properties?.name && res.data?.destination?.properties?.name) {
           setDepartureAirportLocation(new LatLng(res.data.origin.properties.location.y, res.data.origin.properties.location.x));
