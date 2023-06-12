@@ -4,7 +4,6 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const http = require('http');
 const {Server} = require('socket.io');
-
 // DB imports
 const neo4j = require('neo4j-driver');
 const mongoose = require('mongoose');
@@ -25,19 +24,27 @@ const SERVER_PORT = process.env.SERVER_PORT;
 //Import Routes
 const testRoute = require('./routes/test');
 const opensky = require('./routes/opensky');
+const flightRoutes = require('./routes/flightRoutes')
+const flightStatus = require('./routes/flights');
+const airports = require('./routes/airports');
+const route = require('./routes/route');
 const flightRadar = require('./routes/flightRadar');
 
 //Middleware
 app.use(express.json());
 // cors allow origin all
 app.use(cors({
-  origin: '*',
+    origin: 'http://localhost:3000',
+    
 }));
 
 //Route Middlewares
 app.use('/api', testRoute);
 app.use('/api', opensky);
-app.use('/api', flightRadar);
+app.use('/api', flightRoutes);
+app.use('/api', flightStatus);
+app.use('/api/', airports);
+app.use('/api/', route);app.use('/api', flightRadar);
 
 //Connect to MongoDB
 mongoose.connect(process.env.MONGODB_CONNECT, {
