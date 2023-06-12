@@ -1,6 +1,6 @@
 import { Route, Routes , Link } from 'react-router-dom';
 import { Home } from './pages/Home';
-import { FlightRadar } from './pages/FlightRadar';
+import  FlightRadar  from './pages/FlightRadar';
 import { AirportFinder } from './pages/AirportFinder';
 import { FlightFinder } from './pages/FlightFinder';
 import { FlightTracker } from './pages/FlightTracker';
