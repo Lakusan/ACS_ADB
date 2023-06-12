@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const flightSchema = new mongoose.Schema({
+const flightsSchema = new mongoose.Schema({
   _id: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
@@ -55,8 +55,8 @@ const flightSchema = new mongoose.Schema({
 
 
 
-const Flight = mongoose.model('Flight', flightSchema);
+const FlightsSchema = mongoose.model('FlightsSchema', flightsSchema);
 
 
 
-module.exports = Flight;
+module.exports = FlightsSchema;

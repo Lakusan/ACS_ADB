@@ -1,6 +1,7 @@
+//monisha
 const express = require('express');
 const router = express.Router();
-const Flight = require('../models/flight');
+const Flight = require('../models/flight_mg');
 
 router.get('/flights', async (req, res) => {
   try {
