@@ -34,7 +34,7 @@ const flightRadar = require('./routes/flightRadar');
 app.use(express.json());
 // cors allow origin all
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: '*',
     
 }));
 
