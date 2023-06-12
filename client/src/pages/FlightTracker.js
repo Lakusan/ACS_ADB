@@ -5,6 +5,8 @@ import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
 import { Icon } from 'leaflet';
 import "./style.css"
+
+
 export function FlightTracker() {
   const srhLocation = {
     geocode: [49.41386, 8.65164],
@@ -35,11 +37,12 @@ export function FlightTracker() {
 
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const backendURL = process.env.REACT_APP_SERVER_HOSTNAME + ":" + process.env.REACT_APP_SERVER_PORT;
 
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get('http://localhost:5000/api/opensky/flights/' + iata);
+      const response = await axios.get( backendURL + '/api/opensky/flights/' + iata);
       setData(await response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -58,7 +61,7 @@ export function FlightTracker() {
 
   async function fetchAirportInfo(iata) {
     try {
-      const response = await fetch(`http://localhost:5000/api/opensky/airportInfo/${iata}`);
+      const response = await fetch( backendURL + `/api/opensky/airportInfo/${iata}`);
 
       if (!response.ok) {
         throw new Error('Request failed');
@@ -68,7 +71,6 @@ export function FlightTracker() {
       return data;
     } catch (error) {
       console.error(error);
-      // Handle the error appropriately (e.g., show an error message)
     }
   }
 
