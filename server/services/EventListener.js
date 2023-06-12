@@ -95,13 +95,6 @@ class EventListener {
     onSocketServerUserDisconnected() {
         console.log('EVENT: Socket Server User Disconnected');
     }
-
-    // Unregister event listeners
-    removeListeners() {
-        this.redisSubscriber.removeListener('connected', this.onRedisConnected);
-        this.redisSubscriber.removeListener('disconnected', this.onRedisDisconnected);
-        this.dataEmitter.removeListener('dataReceived', this.onDataReceived);
-    }
 }
 
 module.exports = EventListener;
