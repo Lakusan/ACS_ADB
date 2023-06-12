@@ -6,7 +6,6 @@ import { FlightFinder } from './pages/FlightFinder';
 import { FlightTracker } from './pages/FlightTracker';
 import { AirportInformation } from './pages/AirportInformation';
 
-// connect to the backend and collect data.
 
 function App() {
   return (
