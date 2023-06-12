@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Button, List, Dropdown } from 'semantic-ui-react';
 import axios from 'axios';
 
-// author Harshitha -> ChatGPT
+// author Harshitha
 
 export function AirportFinder  ()  {
   const [currentLocation, setCurrentLocation] = useState(null);
