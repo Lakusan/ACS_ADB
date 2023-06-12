@@ -1,7 +1,9 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Input, Button, List, Dropdown } from 'semantic-ui-react';
+import { Button, List, Dropdown } from 'semantic-ui-react';
 import axios from 'axios';
+
+// author Harshitha -> ChatGPT
 
 export function AirportFinder  ()  {
   const [currentLocation, setCurrentLocation] = useState(null);
@@ -37,6 +39,7 @@ export function AirportFinder  ()  {
   };
 
   const fetchNearbyAirports = (location) => {
+    const backendURL = process.env.REACT_APP_SERVER_HOSTNAME + ":" + process.env.REACT_APP_SERVER_PORT;
     if (!location) {
       return; // Exit the function if location is empty
     }
@@ -44,7 +47,7 @@ export function AirportFinder  ()  {
 
     // Fetch airport data from the API endpoint
     axios
-      .get('http://localhost:3000/api/airports')
+      .get(`${backendURL}/api/airports`)
       .then((response) => {
         const airportsData = response.data;
         const selectedCityAirports = airportsData.filter((airport) => airport.city === location);
@@ -68,8 +71,9 @@ export function AirportFinder  ()  {
   };
 
   useEffect(() => {
+    const backendURL = process.env.REACT_APP_SERVER_HOSTNAME + ":" + process.env.REACT_APP_SERVER_PORT;
     axios
-      .get('http://localhost:3000/api/airports')
+      .get(`${backendURL}/api/airports`)
       .then((response) => {
         const airportsData = response.data;
         const cityNames = [...new Set(airportsData.map((airport) => airport.city))];
@@ -109,10 +113,8 @@ export function AirportFinder  ()  {
 
     const buttonElement = searchButtonRef.current;
 
-    // Disable the button to prevent multiple clicks
     buttonElement.disabled = true;
 
-    // Enable the button after the operations are done
     buttonElement.disabled = false;
   };
 
@@ -129,12 +131,8 @@ export function AirportFinder  ()  {
         },
         (error) => {
           console.log(error);
-          // Handle error retrieving current location
         }
       );
-    } else {
-      // Geolocation is not supported by the browser
-      // Handle the case where geolocation is not available
     }
   };
 
