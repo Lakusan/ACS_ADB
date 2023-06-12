@@ -7,10 +7,11 @@ export function FlightFinder() {
   const [source, setSource] = useState('');
   const [destination, setDestination] = useState('');
   const [date, setDate] = useState('');
+  const backendURL = process.env.REACT_APP_SERVER_HOSTNAME + ":" + process.env.REACT_APP_SERVER_PORT;
 
   async function fetchFlightDetails() {
     try {
-      const response = await axios.post('http://localhost:3000/api/flights/search', {
+      const response = await axios.post(`${backendURL}/api/flights/search`, {
         departureAirport: source,
         arrivalAirport: destination,
         date: date
