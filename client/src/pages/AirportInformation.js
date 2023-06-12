@@ -1,9 +1,10 @@
+//Monisha
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Dropdown } from 'semantic-ui-react';
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css'; // Import Leaflet CSS
-import L from 'leaflet'; // Import Leaflet
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import '../components/Style.css';
@@ -21,11 +22,12 @@ export function AirportInformation() {
   const [departureCities, setDepartureCities] = useState([]);
   const [selectedDepartureCity, setSelectedDepartureCity] = useState('');
   const [selectedCityCoordinates, setSelectedCityCoordinates] = useState(null);
+  const backendURL = process.env.REACT_APP_SERVER_HOSTNAME + ":" + process.env.REACT_APP_SERVER_PORT;
 
   useEffect(() => {
     const fetchFlightData = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/flights');
+        const response = await axios.get(`${backendURL}/api/flights`);
         const { data } = response;
         setFlightData(data);
         const cities = [...new Set(data.map((flight) => flight.departureCity))];
@@ -41,7 +43,7 @@ export function AirportInformation() {
   useEffect(() => {
     const fetchCityCoordinates = async (city) => {
       try {
-        // Replace this block with your API call to fetch city coordinates
+        // API call to fetch city coordinates
         const coordinates = {
           'San Francisco': [37.7749, -122.4194],
         'New York': [40.7128, -74.0060],
@@ -75,7 +77,7 @@ export function AirportInformation() {
   };
 
   const airplaneIcon = new Icon({
-    iconUrl: require('../components/icon-airplane.png'),
+    iconUrl: require('../resources/icon-airplane.png'),
     iconSize: [50, 50]
   })
 
