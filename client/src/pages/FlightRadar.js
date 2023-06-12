@@ -10,74 +10,94 @@ class FlightRadar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      markers: [],
-      prevMarkers: [],
+      markers: {},
+      prevMarkers: {},
       srhLocation: {
         geocode: [49.41386, 8.65164],
         popUp: "SRH Heidelberg"
       },
-      srhIcon: new Icon({
+      srhIcon: new L.Icon({
         iconUrl: 'https://www.srh-hochschule-heidelberg.de/typo3conf/ext/site_srh_edu/Resources/Public/Favicons/apple-touch-icon-hochschule.png',
         iconSize: [38, 38]
       }),
       airplaneIcon: new L.Icon({
-        iconUrl: require('../resources/icon-airplane.png'),
+        //https://www.pngwing.com/en/free-png-kbngs
+        iconUrl: require('../resources/arrow_up.png'),
         iconSize: [48, 48],
         iconAnchor: [24, 24],
+        rotationAngle: 0,
+        rotationOrigin: 'center'
       }),
     };
   }
 
+  componentDidMount() {
+    L.Marker.prototype.options.icon = this.state.airplaneIcon;
+  }
+
   handleDataReceived = (data) => {
     const parsedData = JSON.parse(data);
-    this.setState({ prevMarkers: this.state.markers });
-    this.setState({ markers: parsedData });
-    const entryCount = Object.keys(parsedData).length;
-    console.log(entryCount);
+    this.setState((prevState) => ({
+      prevMarkers: prevState.markers,
+      markers: parsedData
+    }));
   };
 
   renderMarkers() {
-    const { markers, airplaneIcon } = this.state;
+    const { markers, prevMarkers } = this.state;
     const markerElements = [];
-    Object.entries(markers).forEach((marker) => {
-      const position = [marker[1].latitude, marker[1].longitude];
-      markerElements.push(
-        <Marker key={marker[0]} position={position} icon={airplaneIcon} rotationAngle={45}>
-          <Popup>
-            Callsign: {marker[0]}<br />
-            Latitude: {marker[1].latitude}<br />
-            Longitude: {marker[1].longitude}<br />
-            Altitude: {marker[1].altitude}<br />
-            ICAO24: {marker[1].icao24}<br />
-            Origin Country: {marker[1].originCountry}
-          </Popup>
-        </Marker>
-      );
-    })
+    Object.entries(markers).forEach(([callsign, currentPosition]) => {
+      const prevMarker = prevMarkers[callsign];
+      if (prevMarker) {
+        const prevPosition = [prevMarker.latitude, prevMarker.longitude];
+        const position = [currentPosition.latitude, currentPosition.longitude];
+        const bearing = this.calculateBearing(prevPosition, position);
+
+        const rotatedIcon = this.createRotatedIcon(this.state.airplaneIcon, bearing);
+
+        markerElements.push(
+          <Marker key={callsign} position={position} rotationAngle={bearing} rotationOrigin="center" icon={rotatedIcon}>
+            <Popup>
+              Callsign: {callsign}<br />
+              Latitude: {currentPosition.latitude}<br />
+              Longitude: {currentPosition.longitude}<br />
+              Altitude: {currentPosition.altitude}<br />
+              ICAO24: {currentPosition.icao24}<br />
+              Origin Country: {currentPosition.originCountry}
+            </Popup>
+          </Marker>
+        );
+      }
+    });
+
     return markerElements;
   }
 
-  //[49.41386, 8.65164] srh
-  // 49.41238, 8.64777 hORNBACH
-  calculateDirectionVector(prevLat, prevLng, newLat, newLng){
-    const toRadians = (degrees) => (degrees * Math.PI / 180);
-    const toDegrees = (radians) => (radians * 180) / Math.PI;
+  calculateBearing = (prevPosition, currentPosition) => {
+    const lat1 = prevPosition[0];
+    const lon1 = prevPosition[1];
+    const lat2 = currentPosition[0];
+    const lon2 = currentPosition[1];
 
-    const phi1 = toRadians(prevLat);
-    const phi2 = toRadians(newLat);
-    const deltaLambda = toRadians(newLng - prevLng);
+    const y = Math.sin(lon2 - lon1) * Math.cos(lat2);
+    const x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1);
 
-    const y = Math.sin(deltaLambda) * Math.cos(phi2);
-    const x =
-      Math.cos(phi1) * Math.sin(phi2) -
-      Math.sin(phi1) * Math.cos(phi2) * Math.cos(deltaLambda);
-    let bearing = Math.atan2(y, x);
-
-    bearing = toDegrees(bearing);
+    let bearing = Math.atan2(y, x) * (180 / Math.PI);
     bearing = (bearing + 360) % 360;
 
     return bearing;
-  }
+  };
+
+  createRotatedIcon = (icon, rotationAngle) => {
+    const rotatedIcon = L.icon({
+      iconUrl: icon.options.iconUrl,
+      iconSize: icon.options.iconSize,
+      iconAnchor: icon.options.iconAnchor,
+      rotationAngle: rotationAngle
+    });
+
+    return rotatedIcon;
+  };
 
   render() {
     return (
@@ -89,9 +109,7 @@ class FlightRadar extends React.Component {
             attribution="Map data &copy; <a href='https://www.openstreetmap.org/'>OpenStreetMap</a> contributors"
           />
           <Marker position={this.state.srhLocation.geocode} icon={this.state.srhIcon}>
-            <Popup>
-              {this.state.srhLocation.popUp}
-            </Popup>
+            <Popup>{this.state.srhLocation.popUp}</Popup>
           </Marker>
           {this.renderMarkers()}
         </MapContainer>
