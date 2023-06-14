@@ -22,7 +22,7 @@ const SERVER_PORT = process.env.SERVER_PORT;
 //Import Routes
 const testRoute = require('./routes/test');
 const opensky = require('./routes/opensky');
-const flightRoutes = require('./routes/flightRoutes')
+const flightRo = require('./routes/flights')
 
 
 
@@ -36,7 +36,7 @@ app.use(cors({
 //Route Middlewares
 app.use('/api', testRoute);
 app.use('/api', opensky);
-app.use('/api', flightRoutes);
+app.use('/api', flightRo);
 
 
 

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Flight = require('../models/flight');
 
-router.get('/flights', async (req, res) => {
+router.get('/flightsinfo', async (req, res) => {
   try {
     const flights = await Flight.find();
     res.json(flights);
