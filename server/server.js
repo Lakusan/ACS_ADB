@@ -29,6 +29,7 @@ const flightStatus = require('./routes/flights');
 const airports = require('./routes/airports');
 const route = require('./routes/route');
 const flightRadar = require('./routes/flightRadar');
+const flightInfo = require('./routes/flightInfo');
 
 //Middleware
 app.use(express.json());
@@ -45,6 +46,7 @@ app.use('/api', flightRoutes);
 app.use('/api', flightStatus);
 app.use('/api/', airports);
 app.use('/api/', route);app.use('/api', flightRadar);
+app.use('/api', flightInfo);
 
 //Connect to MongoDB
 mongoose.connect(process.env.MONGODB_CONNECT, {

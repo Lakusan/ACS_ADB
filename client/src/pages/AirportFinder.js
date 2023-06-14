@@ -12,12 +12,12 @@ export function AirportFinder  ()  {
   const [cities, setCities] = useState([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const searchButtonRef = useRef(null); // To Create a ref for the search button
+  const searchButtonRef = useRef(null); 
   const dropdownRef = useRef(null);
 
 
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
-    const R = 6371; // Radius of the Earth in kilometers
+    const R = 6371; 
 
     const lat1Rad = (lat1 * Math.PI) / 180;
     const lon1Rad = (lon1 * Math.PI) / 180;
@@ -41,11 +41,10 @@ export function AirportFinder  ()  {
   const fetchNearbyAirports = (location) => {
     const backendURL = process.env.REACT_APP_SERVER_HOSTNAME + ":" + process.env.REACT_APP_SERVER_PORT;
     if (!location) {
-      return; // Exit the function if location is empty
+      return; 
     }
     const [lat, lon] = location.split(',').map(parseFloat);
 
-    // Fetch airport data from the API endpoint
     axios
       .get(`${backendURL}/api/airports`)
       .then((response) => {
@@ -85,10 +84,8 @@ export function AirportFinder  ()  {
   }, []);
 
   useEffect(() => {
-    // Fetch current location or use specified location
     const location = currentLocation || specifiedLocation;
     if (location) {
-      // Fetch nearby airports based on the location
       fetchNearbyAirports(location);
     }
   }, [currentLocation, specifiedLocation]);
