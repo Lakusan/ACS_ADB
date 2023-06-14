@@ -27,6 +27,7 @@ const airportsRoute = require('./routes/airports');
 
 
 
+
 //Middleware
 app.use(express.json());
 app.use(cors({

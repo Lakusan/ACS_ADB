@@ -10,12 +10,12 @@ export function AirportFinder  ()  {
   const [cities, setCities] = useState([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const searchButtonRef = useRef(null); // To Create a ref for the search button
+  const searchButtonRef = useRef(null); 
   const dropdownRef = useRef(null);
 
 
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
-    const R = 6371; // Radius of the Earth in kilometers
+    const R = 6371; 
 
     const lat1Rad = (lat1 * Math.PI) / 180;
     const lon1Rad = (lon1 * Math.PI) / 180;
@@ -38,11 +38,10 @@ export function AirportFinder  ()  {
 
   const fetchNearbyAirports = (location) => {
     if (!location) {
-      return; // Exit the function if location is empty
+      return; 
     }
     const [lat, lon] = location.split(',').map(parseFloat);
 
-    // Fetch airport data from the API endpoint
     axios
       .get('http://localhost:3000/api/airports')
       .then((response) => {
@@ -81,10 +80,10 @@ export function AirportFinder  ()  {
   }, []);
 
   useEffect(() => {
-    // Fetch current location or use specified location
+    
     const location = currentLocation || specifiedLocation;
     if (location) {
-      // Fetch nearby airports based on the location
+      
       fetchNearbyAirports(location);
     }
   }, [currentLocation, specifiedLocation]);
@@ -106,13 +105,10 @@ export function AirportFinder  ()  {
       dropdownRef.current.handleClose(); 
     }
 
-
     const buttonElement = searchButtonRef.current;
 
-    // Disable the button to prevent multiple clicks
     buttonElement.disabled = true;
-
-    // Enable the button after the operations are done
+    
     buttonElement.disabled = false;
   };
 
@@ -129,12 +125,11 @@ export function AirportFinder  ()  {
         },
         (error) => {
           console.log(error);
-          // Handle error retrieving current location
+          
         }
       );
     } else {
-      // Geolocation is not supported by the browser
-      // Handle the case where geolocation is not available
+      
     }
   };
 
@@ -142,6 +137,7 @@ export function AirportFinder  ()  {
     <div>
       <label style={{ fontSize: '20px', fontWeight: 'bold', color: 'black' }}>
         Search nearby airports:
+        <br></br> <br></br>
         <Dropdown
         ref={dropdownRef}
           placeholder="Select location"
@@ -159,6 +155,7 @@ export function AirportFinder  ()  {
           onOpen={() => setDropdownOpen(true)} 
           onClose={() => setDropdownOpen(false)} 
         />
+        <br></br>
         <Button primary onClick={handleSearch} ref={searchButtonRef}>
           Search
         </Button>
@@ -173,7 +170,7 @@ export function AirportFinder  ()  {
           <List.Item key={airport._id}>
             <List.Content>
               <List.Header>{airport.name}</List.Header>
-              <List.Description>{`${airport.city}, ${airport.country}`}</List.Description>
+              <List.Description>{`${airport.city}`}</List.Description>
             </List.Content>
           </List.Item>
         ))}
