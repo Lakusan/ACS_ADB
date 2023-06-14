@@ -58,13 +58,13 @@ router.get('/opensky/flights/:iata', async (req, res) => {
   if (value) {
     const cachedData = JSON.parse(value);
     // redisClient.quit();
-    console.log('--> OPENSKY: REDIS Disconnect checking data');
+    console.log('--> AVIATIONSTACK: REDIS Disconnect checking data');
     res.status(200).json({ data: cachedData, source: 'redis' });
     return;
   }
 
   try {
-    console.log('--> OPENSKY: GETTING DATA FROM API');
+    console.log('--> AVIATIONSTACK: GETTING DATA FROM API');
     const response = await axios.get(`http://api.aviationstack.com/v1/flights`, {
       params: {
         access_key: process.env.AVISTACK_API_KEY,
@@ -74,7 +74,7 @@ router.get('/opensky/flights/:iata', async (req, res) => {
 
     redisClient.setEx(`flight_info:${iata}`, 60 * 15, JSON.stringify(response.data.data)); // Cache for 15 min    
     // redisClient.quit();
-    console.log('--> OPENSKY: REDIS Disconnect at the end');
+    console.log('--> AVIATIONSTACK: REDIS Disconnect at the end');
 
 
     res.json({ data: response.data.data, source: "api" });
