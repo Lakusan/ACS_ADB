@@ -108,7 +108,6 @@ export function AirportFinder  ()  {
     const buttonElement = searchButtonRef.current;
 
     buttonElement.disabled = true;
-    
     buttonElement.disabled = false;
   };
 
