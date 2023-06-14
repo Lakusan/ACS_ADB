@@ -19,17 +19,19 @@ function App() {
           <Link to="/radar"> Flight Radar Andreas</Link>
         </li>
         <li>
-          <Link to="/airport/finder"> Aiport Finder Harshitha </Link>
-        </li>
-        <li>
-          <Link to="/flight"> Flight Finder Satish </Link>
+          <Link to="/route"> Route Planning Ugurcan </Link>
         </li>
         <li>
           <Link to="/tracker/"> Flight Tracker Ugurcan </Link>
         </li>
         <li>
-          <Link to="/route"> Route Planning Ugurcan </Link>
+          <Link to="/airport/finder"> Aiport Finder Harshitha </Link>
         </li>
+        <li>
+          <Link to="/flight"> Flight Finder Satish </Link>
+        </li>
+       
+       
         <li>
           <Link to="/airport/info"> Airport information Monisha </Link>
         </li>
