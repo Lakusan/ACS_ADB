@@ -144,7 +144,7 @@ export function RoutePlanner() {
 
           <p><strong>Distance:</strong> { Math.round(routeInfo.kmDistance)} km</p>
           <p><strong>A320 Neo Estimated Flight Time:</strong> {routeInfo.hours} hours { Math.round(routeInfo.minutes)} minutes</p>
-          <p><strong>A320 Neo Estimated Fuel Consumption:</strong> { Math.round(routeInfo.fuelConsumption)} L</p>
+          <p><strong>A320 Neo Estimated Fuel Consumption:</strong> { Math.round(routeInfo.fuelConsumption)}l</p>
           <p><strong>A320 Neo Estimated Fuel Cost:</strong> { Math.round(routeInfo.fuelCost)} Euro</p>
           <p>{routeInfo.flightStatus}</p>
 
