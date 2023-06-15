@@ -1,0 +1,28 @@
+.flight-table table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.flight-table th {
+    background-color: #328cc4;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    font: 15px  Code Pro, monospace;
+    font-weight: bold;
+
+}
+.flight-table td {
+    text-align: center;
+    padding: 15px;
+    font: 15px  Code Pro, monospace;
+    color: #333;
+    border-bottom: 1px solid #ccc;
+    
+}
+.flight-table tr:hover {
+    background-color: #ddd;
+}
+.flight-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
