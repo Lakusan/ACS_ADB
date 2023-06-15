@@ -22,7 +22,7 @@ class FlightRadar extends React.Component {
       }),
       airplaneIcon: new L.Icon({
         //https://www.pngwing.com/en/free-png-kbngs
-        iconUrl: require('../resources/arrow_up.png'),
+        iconUrl: require('../resources/icon-airplane.png'),
         iconSize: [48, 48],
         iconAnchor: [24, 24],
         rotationAngle: 0,
@@ -69,7 +69,7 @@ class FlightRadar extends React.Component {
         );
       }
     });
-
+    console.log(`tracking: ${markerElements.length} Objects`);
     return markerElements;
   }
 
