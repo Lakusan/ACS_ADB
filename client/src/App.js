@@ -7,10 +7,12 @@ import { FlightTracker } from './pages/FlightTracker';
 import { AirportInformation } from './pages/AirportInformation';
 import { RoutePlanner } from './pages/RoutePlanner';
 
+import './App.css';
+
 function App() {
   return (
     <>
-    <nav>
+    <nav className='nav-menu'>
       <ul>
         <li>
           <Link to="/"> Home </Link>

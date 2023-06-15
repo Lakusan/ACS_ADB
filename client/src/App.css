@@ -69,3 +69,37 @@ nav {
   align-items: center;
   height: 100%;
 } */
+
+.nav-menu ul {
+ display: flex;
+ gap: 10px;
+}
+.nav-menu ul li {
+ list-style: none;
+ float: left;
+ display: block;
+ padding:25px;
+ background-color: cadetblue;
+ border: 1px solid #e2e2e2;
+ 
+ border-radius: 5px;
+ text-align: center;
+ transition: all 0.3s ease-in-out;
+ margin-top:15px;
+}
+.nav-menu ul li:hover {
+ background-color: burlywood;
+ color: #000;
+}
+.nav-menu ul li a {
+ text-decoration: none;
+ color: #fff;
+ font-size: 18px;
+ font-weight: 600;
+}
+.nav-menu ul li a:hover {
+ color: #e2e2e2;
+}
+.routeInfo{
+  padding:15px;
+}
