@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const FlightinfoSchema = new mongoose.Schema({
+const flightinfoSchema = new mongoose.Schema({
 
     _id: {
         type: mongoose.Schema.Types.ObjectId,
@@ -188,7 +188,7 @@ const FlightinfoSchema = new mongoose.Schema({
 });
 
 
-const FlightInfo = mongoose.model('FlightInfo', FlightinfoSchema,'Flightsinfo');
+const FlightInfo = mongoose.model('FlightInfo', flightinfoSchema,'flightsinfo');
 
 
 module.exports = FlightInfo;

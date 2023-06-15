@@ -75,10 +75,6 @@ neo4jDriver.verifyConnectivity()
 
 //Listen Server
 server.listen(SERVER_PORT, () => console.log(`Server is running on PORT: ${SERVER_PORT}`));
-//docker run -d -p 6379:6379 --name myredis --network redisnet redis
-
-// attach socket.io server to app to get access to this instance from other modules
-// app.set('socketio', io);
 
 // start socket server
 const io = IO.getInstance();
@@ -92,17 +88,5 @@ const eventListener = new EventListener(flightDataRTSubService, flightDataRTPubS
 // Eventlistener: on message in redis channel triggers socket emit with data
 flightDataRTPubService.collectRTDataFromAPI();
 flightDataRTSubService.connect(process.env.REDIS_PUB_FLIGHT_RADAR);
-
-
-
-
-//Socket IO
-  
-//   io.on("connection", (socket) => {
-//     console.log(`User Connected: ${socket.id}`);
-//     socket.on("send_message", (data) => {
-//     console.log(data);
-//   });
-// });
 
 module.exports.app = app;
