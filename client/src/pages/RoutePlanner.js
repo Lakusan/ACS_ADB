@@ -22,6 +22,16 @@ export function RoutePlanner() {
     iconUrl: require('../resources/airport.png'),
     iconSize: [35, 35]
   });
+  const departure = new Icon({
+    iconUrl: require('../resources/departure.png'),
+    iconSize: [35, 35]
+  });
+
+  const arrival = new Icon({
+    iconUrl: require('../resources/arrivals.png'),
+    iconSize: [35, 35]
+  });
+
 
   // Markers
   const [positionA, setPositionA] = useState([50.0380, 8.5622]);
@@ -183,10 +193,10 @@ export function RoutePlanner() {
             </Marker>
 
 
-            <Marker position={departureAirportLocation} icon={airport}>
+            <Marker position={departureAirportLocation} icon={departure}>
               <Popup>Departure:{departureInfo.name}</Popup>
             </Marker>
-            <Marker position={destinationAirportLocation} icon={airport}>
+            <Marker position={destinationAirportLocation} icon={arrival}>
               <Popup>Destination:{destinationInfo.name}</Popup>
             </Marker>
 
