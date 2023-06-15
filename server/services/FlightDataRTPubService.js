@@ -34,7 +34,7 @@ class FlightDataRTPubService extends EventEmitter {
         // await this.parseAPIData('states/all?lamin=-60.0&lomin=-170.0&lamax=50.0&lomax=-30.0');
         // germany only 
         await this.parseAPIData('states/all?lamin=35.0&lamin=47.3&lomin=5.9&lamax=55.1&lomax=15.2');
-        // await this.parseAPIData('states/all');
+        // await this.parseAPIData('states/all'); // 6.000 - 10.000 flights.
         await this.sleep(process.env.API_REFRESH_RATE);
         await this.collectRTDataFromAPI();
     }
