@@ -135,7 +135,7 @@ export function RoutePlanner() {
       
     {routeInfo ? (
           <>
-
+<div className='routeInfo'>
           <h2>Route Information</h2>
           <p><strong>From:</strong> {routeInfo.origin.properties.name} - {routeInfo.origin.properties.icao}  </p>
           <p><strong>To:</strong> {routeInfo.destination.properties.name} - {routeInfo.destination.properties.icao}</p>
@@ -149,7 +149,7 @@ export function RoutePlanner() {
           <p>{routeInfo.flightStatus}</p>
 
 
-          
+          </div>
           
 
           </>
