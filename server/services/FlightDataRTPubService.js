@@ -1,8 +1,10 @@
 const axios = require('axios');
 const EventEmitter = require('events');
 const redisServices = require('./redisServices');
-const { isLocalTime } = require('neo4j-driver');
 require('dotenv').config();
+
+
+// Publishes flight data to redis channel
 
 
 class FlightDataRTPubService extends EventEmitter {
@@ -26,7 +28,13 @@ class FlightDataRTPubService extends EventEmitter {
     }
 
     async collectRTDataFromAPI() {
-        await this.parseAPIData('states/all');
+        // europe        
+        // await this.parseAPIData('states/all?lamin=35.0&lomin=-10.0&lamax=70.0&lomax=40.0');
+        // USA
+        // await this.parseAPIData('states/all?lamin=-60.0&lomin=-170.0&lamax=50.0&lomax=-30.0');
+        // germany only 
+        await this.parseAPIData('states/all?lamin=35.0&lamin=47.3&lomin=5.9&lamax=55.1&lomax=15.2');
+        // await this.parseAPIData('states/all');
         await this.sleep(process.env.API_REFRESH_RATE);
         await this.collectRTDataFromAPI();
     }
