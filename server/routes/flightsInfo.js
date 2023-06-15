@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const FlightInfo = require('../models/FlightInfo');
+const FlightInfo = require('../models/Flightsinfo');
 
 router.get('/flightsinfo', async (req, res) => {
   try {
