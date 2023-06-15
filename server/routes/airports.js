@@ -10,7 +10,6 @@ const collectionName = 'airports';
 const uri = process.env.MONGODB_CONNECT
 const client = new MongoClient(uri);
 
-
 const maxDistance = 300;
   async function findNearestAirports(longitude, latitude) {
     try {
@@ -20,13 +19,11 @@ const maxDistance = 300;
       const database = client.db(databaseName);
       const collection = database.collection(collectionName);
   
-      // Create the GeoJSON point
       const geoPoint = {
         type: 'Point',
         coordinates: [longitude, latitude],
       };
   
-      // Find the nearest airports using the $geoNear aggregation
       const pipeline = [
         {
           $geoNear: {
@@ -49,7 +46,6 @@ const maxDistance = 300;
         },
       ];
   
-      // Execute the aggregation pipeline
       const result = await collection.aggregate(pipeline).toArray();
     
       return result;
@@ -80,7 +76,6 @@ router.get('/airports/:latitude/:longitude',  async (req,res) => {
 
 });
 
-// Defining the route handler for /api/airports
 router.get('/airports', async (req, res) => {
   try {
     const airports = await Airport.find();

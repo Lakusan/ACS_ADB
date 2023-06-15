@@ -21,6 +21,16 @@ export function FlightTracker() {
     iconUrl: require('../resources/airplane.png'),
     iconSize: [35, 35],
   });
+  const departure = new Icon({
+    iconUrl: require('../resources/departure.png'),
+    iconSize: [35, 35]
+  });
+
+  const arrival = new Icon({
+    iconUrl: require('../resources/arrivals.png'),
+    iconSize: [35, 35]
+  });
+
 
   let { iata } = useParams();
 
@@ -120,7 +130,7 @@ export function FlightTracker() {
                       departureAirportInfo.location.coordinates[1],
                       departureAirportInfo.location.coordinates[0],
                     ]}
-                    icon={airport}
+                    icon={departure}
                   >
                     <Popup>
                       <h3>
@@ -150,7 +160,7 @@ export function FlightTracker() {
                       arrivalAirportInfo.location.coordinates[1],
                       arrivalAirportInfo.location.coordinates[0],
                     ]}
-                    icon={airport}
+                    icon={arrival}
                   >
                     <Popup>
                       <h3>

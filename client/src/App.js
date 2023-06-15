@@ -24,7 +24,7 @@ function App() {
           <Link to="/route"> Route Planning Ugurcan </Link>
         </li>
         <li>
-          <Link to="/tracker/"> Flight Tracker Ugurcan </Link>
+          <Link to="/tracker/UA2402"> Flight Tracker Ugurcan </Link>
         </li>
         <li>
           <Link to="/airport/finder"> Aiport Finder Harshitha </Link>
