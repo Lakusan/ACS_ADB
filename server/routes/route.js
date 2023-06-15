@@ -102,7 +102,7 @@ async function calculateDistance(icao1, icao2) {
   
 
 function estimateFlight(distanceInKm){
-  
+  //This function I haver referred/asked the range, speed, time, burn factor and formula from openai boot. @Author: Ugurcan Kaya
 // Range of Airbus A320neo in kilometers
 const aircraftRange = 6000;
 // Average speed 
